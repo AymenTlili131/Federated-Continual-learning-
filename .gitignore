@@ -1,0 +1,5 @@
+*.gz
+*.jpg
+*.bz2
+*.mat
+Idea/Ours/cifar_100/cifar-100-python/train
