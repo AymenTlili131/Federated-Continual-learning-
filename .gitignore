@@ -1,5 +1,12 @@
 *.gz
-*.jpg
+*.pdf
 *.bz2
 *.mat
-Idea/Ours/cifar_100/cifar-100-python/train
+Pictures
+PFE/Screenshots/
+PCA+examples
+CL avelanche checkpoints
+PFE/Code/NeurIPS_2022-Generative_Hyper_Representations/        
+!PFE/Code/NeurIPS_2022-Generative_Hyper_Representations/examples
+!PFE/Code/NeurIPS_2022-Generative_Hyper_Representations/HGS zoo acc.odt      
+PFE/Article

@@ -1,0 +1,14 @@
+
+https://en.wikipedia.org/wiki/Fuzzy_clustering
+
+https://www.youtube.com/watch?v=nv6oFDp6rNQ&ab_channel=YannicKilcher
+
+https://www.researchgate.net/figure/Node-classification-accuracy-of-cyclic-DSBM-graphs-with-varying-net-flow_tbl7_349547059
+
+http://www.scholarpedia.org/article/Hopfield_network#Hierarchical_Associative_Memory_Network
+
+https://www.youtube.com/watch?v=Io6r7K2-TGQ&t=760s&ab_channel=EdanMeyer
+
+----
+https://towardsdatascience.com/proximal-policy-optimization-ppo-explained-abed1952457b
+https://morioh.com/p/0f81f314e946?f=5cb7d89d660c8335951ca454&fbclid=IwAR0HgKZXMkAYGvU5cDnCEACpqpNXrIFiFX3FRwB54xLOPNdkXZg3WkDho2c
