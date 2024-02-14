@@ -24,6 +24,36 @@ def get_clones(module, N):
     return nn.ModuleList([copy.deepcopy(module) for i in range(N)])
 
 
+
+class PositionalEncoder(nn.Module):
+    def __init__(self, d_model, max_seq_len=80, device="cpu"):
+        super().__init__()
+        self.d_model = d_model
+        self.device = device
+
+        # create constant 'pe' matrix with values dependant on
+        # pos and i
+        self.pe = self._generate_positional_encoding(max_seq_len, d_model)
+
+    def forward(self, x):
+        # make embeddings relatively larger
+        x = x * math.sqrt(self.d_model)
+        # add constant to embedding
+        seq_len = x.size(1)
+        # dynamically adjust positional encoding matrix based on sequence length
+        pe = self.pe[:, :seq_len]
+        x = x + pe
+        return x
+
+    def _generate_positional_encoding(self, max_seq_len, d_model):
+        pe = torch.zeros(max_seq_len, d_model)
+        position = torch.arange(0, max_seq_len, dtype=torch.float).unsqueeze(1)
+        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
+        pe[:, 0::2] = torch.sin(position * div_term)
+        pe[:, 1::2] = torch.cos(position * div_term)
+        pe = pe.unsqueeze(0)
+        return pe
+    '''   
 class PositionalEncoder(nn.Module):
     def __init__(self, d_model, max_seq_len=80, device="cpu"):
         super().__init__()
@@ -40,7 +70,17 @@ class PositionalEncoder(nn.Module):
 
         pe = pe.unsqueeze(0)
         self.register_buffer("pe", pe)
-
+    def forward(self, x):
+        # make embeddings relatively larger
+        x = x * math.sqrt(self.d_model)
+        # get the sequence length of the input tensor
+        seq_len = x.size(1)
+        # create positional encoding matrix dynamically
+        pe = self.pe[:, :seq_len]
+        # add positional encoding to the input tensor
+        x = x + pe
+        return x
+  
     def forward(self, x):
         # make embeddings relatively larger
         x = x * math.sqrt(self.d_model)
@@ -48,6 +88,7 @@ class PositionalEncoder(nn.Module):
         seq_len = x.size(1)
         x = x + Variable(self.pe[:, :seq_len], requires_grad=False).to(self.device)
         return x
+    '''
 
 
 def attention(q, k, v, d_k, mask=None, dropout=None):
@@ -564,7 +605,7 @@ class EmbedderNeuronGroup_index(nn.Module):
 class EmbedderNeuronGroup(nn.Module):
     def __init__(self, d_model, seed=22):
         super().__init__()
-
+        print("EmbedderNeuroneGroup")
         self.neuron_l1 = nn.Linear(16, d_model)
         self.neuron_l2 = nn.Linear(5, d_model)
 
@@ -572,19 +613,44 @@ class EmbedderNeuronGroup(nn.Module):
         return self.multiLinear(x)
 
     def multiLinear(self, v):
+        print(v.shape)
         # Hardcoded position for easy-fast integration
         l = []
         # l1
-        for ndx in range(5):
-            idx_start = ndx * 16
-            idx_end = idx_start + 16
-            l.append(self.neuron_l1(v[:, idx_start:idx_end]))
-        # l2
-        for ndx in range(4):
-            idx_start = 5 * 16 + ndx * 5
-            idx_end = idx_start + 5
-            l.append(self.neuron_l2(v[:, idx_start:idx_end]))
+        if v.shape[1]==100:
+            for ndx in range(5):
+                idx_start = ndx * 16
+                idx_end = idx_start + 16
+                l.append(self.neuron_l1(v[:, idx_start:idx_end]))
+                
+            # l2
+            for ndx in range(4):
+                idx_start = 5 * 16 + ndx * 5
+                idx_end = idx_start + 5
+                l.append(self.neuron_l2(v[:, idx_start:idx_end]))
 
+        if v.shape[1]==2464:
+            for g in range(25):
+                if g==24:
+                    for ndx in range(4):
+                        idx_start = g*100 + ndx * 16
+                        idx_end = idx_start + 16
+                        l.append(self.neuron_l1(v[:, idx_start:idx_end]))
+                        #print(v[:, idx_start:idx_end].shape)
+                else:     
+                    for ndx in range(5):
+                        idx_start =g*100 + ndx * 16
+                        idx_end = idx_start + 16
+                        l.append(self.neuron_l1(v[:, idx_start:idx_end]))
+                        #print(v[:, idx_start:idx_end].shape)
+                    # l2
+                    for ndx in range(4):
+                        idx_start = g*100 + 5 * 16 + ndx * 5
+                        idx_end = idx_start + 5
+                        l.append(self.neuron_l2(v[:, idx_start:idx_end]))
+                        #print(v[:, idx_start:idx_end].shape)
+        print(len(l))
+        print(len(l[0]))
         final = torch.stack(l, dim=1)
 
         # print(final.shape)
@@ -593,61 +659,65 @@ class EmbedderNeuronGroup(nn.Module):
 class DebedderNeuronGroup(nn.Module):
     def __init__(self, d_model):
         super().__init__()
-
-        self.neuron_l1 = nn.Linear(d_model, 16)
-        self.neuron_l2 = nn.Linear(d_model, 5)
+        self.d_model = d_model
+        self.linear1 = nn.Linear(d_model, 16)
+        self.linear2 = nn.Linear(d_model, 5)
 
     def forward(self, x):
         return self.multiLinear(x)
 
-    def multiLinear(self, v):
-        l = []
-        for ndx in range(5):
-            l.append(self.neuron_l1(v[:, ndx]))
-        for ndx in range(5, 9):
-            l.append(self.neuron_l2(v[:, ndx]))
+    def multiLinear(self, x):
+        segments = []
+        # Assuming x is of shape (batch_size, num_segments, d_model)
+        for i in range(x.size(1)):
+            if i < 480:
+                segment = self.linear1(x[:, i])
+            else:
+                segment = self.linear2(x[:, i])
+            segments.append(segment)
 
-        final = torch.cat(l, dim=1)
-
-        # print(final.shape)
-        return final
+        # Concatenate segments along the second dimension
+        reconstructed = torch.cat(segments, dim=1)
+        return reconstructed
     
-
 class Neck2Seq(nn.Module):
     def __init__(self, d_model, neck):
         super().__init__()
 
-        self.neuron11 = nn.Linear(neck, d_model)
-        self.neuron12 = nn.Linear(neck, d_model)
-        self.neuron13 = nn.Linear(neck, d_model)
-        self.neuron14 = nn.Linear(neck, d_model)
-        self.neuron15 = nn.Linear(neck, d_model)
-        self.neuron21 = nn.Linear(neck, d_model)
-        self.neuron22 = nn.Linear(neck, d_model)
-        self.neuron23 = nn.Linear(neck, d_model)
-        self.neuron24 = nn.Linear(neck, d_model)
+        self.neurons = nn.ModuleList([nn.Linear(neck, d_model) for _ in range(9)])
+
+    def forward(self, x):
+        l = [neuron(x) for neuron in self.neurons]
+        final = torch.stack(l, dim=1)
+        return final
+
+
+class Seq2Vec(nn.Module):
+    def __init__(self, d_model, max_seq_len):
+        super().__init__()
+        self.num_neurons = 20  # Number of linear transformations
+        self.d_model = d_model
+        self.max_seq_len = max_seq_len
+
+        # Define linear layers
+        self.neurons = nn.ModuleList([
+            nn.Linear(d_model, 16) if i < 5 else nn.Linear(d_model, 5)
+            for i in range(self.num_neurons)
+        ])
 
     def forward(self, x):
         return self.multiLinear(x)
 
     def multiLinear(self, v):
-        # print("V shape: ", v.shape)
         l = []
-        l.append(self.neuron11(v))
-        l.append(self.neuron12(v))
-        l.append(self.neuron13(v))
-        l.append(self.neuron14(v))
-        l.append(self.neuron15(v))
-        l.append(self.neuron21(v))
-        l.append(self.neuron22(v))
-        l.append(self.neuron23(v))
-        l.append(self.neuron24(v))
-        final = torch.stack(l, dim=1)
-
-        # print(final.shape)
+        for i in range(self.max_seq_len):
+            # Apply the appropriate linear transformation
+            neuron_output = self.neurons[i % self.num_neurons](v[:, i])
+            l.append(neuron_output)
+        
+        final = torch.cat(l, dim=1)  # Concatenate tensors along the feature dimension (dim=1)
         return final
-
-
+'''    
 class Seq2Vec(nn.Module):
     def __init__(self, d_model):
         super().__init__()
@@ -680,7 +750,7 @@ class Seq2Vec(nn.Module):
 
         # print(final.shape)
         return final
-
+'''
 class EncoderNeuronGroup(nn.Module):
     def __init__(self, d_model, N, heads, max_seq_len, dropout, d_ff):
         super().__init__()
@@ -712,7 +782,7 @@ class DecoderNeuronGroup(nn.Module):
         self.layers = get_clones(EncoderLayer(d_model, heads,normalize=True,dropout=dropout, d_ff=d_ff), N)
         self.norm = Norm(d_model)
 
-        self.lay = Seq2Vec(d_model=d_model)
+        self.lay = Seq2Vec(d_model=d_model,max_seq_len=max_seq_len)
 
     def forward(self, src, mask=None):
         scores = []
