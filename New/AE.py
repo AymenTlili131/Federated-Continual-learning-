@@ -7,8 +7,6 @@ from torch.utils.tensorboard import SummaryWriter
 import itertools
 from einops import repeat
 
-
-
 from einops import repeat
 
 import torch.nn as nn
@@ -613,7 +611,7 @@ class EmbedderNeuronGroup(nn.Module):
         return self.multiLinear(x)
 
     def multiLinear(self, v):
-        print(v.shape)
+        #print(v.shape)
         # Hardcoded position for easy-fast integration
         l = []
         # l1
@@ -649,13 +647,47 @@ class EmbedderNeuronGroup(nn.Module):
                         idx_end = idx_start + 5
                         l.append(self.neuron_l2(v[:, idx_start:idx_end]))
                         #print(v[:, idx_start:idx_end].shape)
-        print(len(l))
-        print(len(l[0]))
+        #print(len(l))
+        #print(len(l[0]))
         final = torch.stack(l, dim=1)
 
         # print(final.shape)
         return final
 
+class DebedderNeuronGroup(nn.Module):
+    def __init__(self, d_model, max_seq_len):
+        super().__init__()
+        self.d_model = d_model
+        self.max_seq_len = max_seq_len
+        self.linear1 = nn.Linear(d_model, 16)
+        self.linear2 = nn.Linear(d_model, 5)
+
+    def forward(self, x):
+        return self.multiLinear(x)
+
+    def multiLinear(self, x):
+        segments = []
+        for i in range(x.size(1)):
+            if i < self.max_seq_len // 2:
+                segment = self.linear1(x[:, i])
+            else:
+                segment = self.linear2(x[:, i])
+            segments.append(segment)
+
+        reconstructed = torch.cat(segments, dim=1)
+        return reconstructed
+
+class Seq2Vec(nn.Module):
+    def __init__(self, d_model, max_seq_len, num_neurons=20):
+        super().__init__()
+        self.num_neurons = num_neurons
+        self.d_model = d_model
+        self.max_seq_len = max_seq_len
+        self.neurons = nn.ModuleList([
+            nn.Linear(d_model, 16) if i < num_neurons // 2 else nn.Linear(d_model, 5)
+            for i in range(num_neurons)
+        ])
+        
 class DebedderNeuronGroup(nn.Module):
     def __init__(self, d_model):
         super().__init__()
@@ -757,7 +789,7 @@ class EncoderNeuronGroup(nn.Module):
         self.N = N
         self.embed = EmbedderNeuronGroup(d_model)
         self.pe = PositionalEncoder(d_model, max_seq_len)
-        print(dropout)
+        print("decoder droupout init",dropout)
         self.layers = get_clones(EncoderLayer(d_model, heads, normalize=True,dropout=dropout, d_ff=d_ff), N)
         self.norm = Norm(d_model)
 
@@ -778,7 +810,7 @@ class DecoderNeuronGroup(nn.Module):
         self.N = N
         self.embed = Neck2Seq(d_model, neck)
         self.pe = PositionalEncoder(d_model, max_seq_len)
-        print(dropout)
+        print("decoder droupout init",dropout)
         self.layers = get_clones(EncoderLayer(d_model, heads,normalize=True,dropout=dropout, d_ff=d_ff), N)
         self.norm = Norm(d_model)
 
