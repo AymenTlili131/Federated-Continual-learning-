@@ -16,3 +16,8 @@ Old/PFE/Code/NeurIPS_2021-Weight_Space_Learning/
 New/data/SplitMnist
 New/checkpoints
 New/data
+Intermediary results 0/*
+Tracking/
+New/wandb/
+Old/
+.ipynb_checkpoints
