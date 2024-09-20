@@ -2,7 +2,8 @@
 all the following files should go Under "New" after you clone this repo 
 MSE.ipynb and wsiayn are the notebooks that handle :
 
-+ load Autoencoder architecture "from Double_input_transformer import CustomDataset,TransformerAE"
++ load Autoencoder architecture
+  > "from Double_input_transformer import CustomDataset,TransformerAE"
 + Loading data from pre-defined .npy lists 
 + training & wandb logging 
 + Auto-encoder testset forward passes 
@@ -12,7 +13,7 @@ MSE.ipynb and wsiayn are the notebooks that handle :
 + create the boxplots for post finetuning analysis on the test set for various loss implementation
 
 
-*the file TDA of weights implements the Mapper algotihm for each loss functions "AE epoch {0/best} {num_epochs_training}.csv" and an indication of the loss function sometimes in the name .
+*the file TDA of weights implements the **Mapper** algotihm for each loss functions "AE epoch {0/best} {num_epochs_training}.csv" and an indication of the loss function sometimes in the name .
 *that file splits the Auto-encoder testset forward passes into Ground Truth (GT) , Freshly predicted weights (PD) and Finetuned Weights (FN)
 
 -so the notebooks and .npy should be on the same folder
@@ -26,3 +27,5 @@ the model zoo was trained using files such as Silu.py and target.py . feel free 
 + Zoo.csv and Distilled data and loadable npy : https://drive.google.com/drive/folders/1_dOrA9PlHdLpoJHyeWwACRKcF-RLTigp?usp=sharing
 + Screenshots used during the making of this proposal : https://drive.google.com/drive/folders/1MSocnYbi-nzVE5GVbNPO-ont64scrvEL?usp=drive_link
 + Prediction and Finetuning  weights as well as some metrics and distances : https://drive.google.com/drive/folders/16sbcyhWOfVtU1HGpFoOls0RrXxTk4TI0?usp=sharing
+
+this repo provides better methods https://github.com/VICO-UoE/DatasetCondensation on advanced datasets than the base dataset distillation method we opted to use because it was already available for MNIST https://github.com/SsnL/dataset-distillation
