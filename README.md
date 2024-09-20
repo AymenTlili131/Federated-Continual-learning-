@@ -2,14 +2,14 @@
 all the following files should go Under "New" after you clone this repo 
 MSE.ipynb and wsiayn are the notebooks that handle :
 
-+load Autoencoder architecture "from Double_input_transformer import CustomDataset,TransformerAE"
-+Loading data from pre-defined .npy lists 
-+training & wandb logging 
-+Auto-encoder testset forward passes 
-+finetuning 
-+Some cleaning tasks on testset logs when KL divergence and WS distance isn't calculated or logged properly they had to be recomputed from the weights directly
-+finetuning on limited size data (20%,10%,5%)(epoch-wise,step-wise precision)
-+create the boxplots for post finetuning analysis on the test set for various loss implementation
++ load Autoencoder architecture "from Double_input_transformer import CustomDataset,TransformerAE"
++ Loading data from pre-defined .npy lists 
++ training & wandb logging 
++ Auto-encoder testset forward passes 
++ finetuning 
++ Some cleaning tasks on testset logs when KL divergence and WS distance isn't calculated or logged properly they had to be recomputed from the weights directly
++ finetuning on limited size data (20%,10%,5%)(epoch-wise,step-wise precision)
++ create the boxplots for post finetuning analysis on the test set for various loss implementation
 
 
 the file TDA of weights implements the Mapper algotihm for each loss functions "AE epoch {0/best} {num_epochs_training}" and an indication of the loss function sometimes in the name .
