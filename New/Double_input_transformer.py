@@ -418,7 +418,7 @@ class TransformerAE(nn.Module):
         self.d_model=d_model
         self.max_seq_len=max_seq_len
         self.neck=neck
-
+        
 
         self.enc1 = EncoderNeuronGroup(d_model=self.d_model, N=self.N, heads=self.heads, max_seq_len=self.max_seq_len, dropout=self.dropout,d_ff=self.d_ff)
         self.enc2 = EncoderNeuronGroup(d_model=self.d_model, N=self.N, heads=self.heads, max_seq_len=self.max_seq_len, dropout=self.dropout,d_ff=self.d_ff)
@@ -431,7 +431,8 @@ class TransformerAE(nn.Module):
         #self.vec2neck = nn.Linear(2*self.d_ff * self.max_seq_len, self.neck)
 
         self.tanh = nn.Tanh()
-
+        # self.dummy_param = nn.Parameter(torch.empty(0))
+        # self.device=self.dummy_param.device
         # Xavier Uniform Initialitzation
         for p in self.parameters():
             if p.dim() > 1:
@@ -441,7 +442,8 @@ class TransformerAE(nn.Module):
             self.cuda()
 
     def forward(self, inp1,inp2):
-
+        # device = self.dummy_param.device
+        # self.device= device
         # First Approach
         out1, scEnc1 = self.enc1(inp1)
         #print("Encoder 1 shape:",out1.shape)

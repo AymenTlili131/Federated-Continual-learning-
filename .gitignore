@@ -20,4 +20,5 @@ Intermediary results 0/*
 Tracking/
 New/wandb/
 Old/
-.ipynb_checkpoints
+*.ipynb_checkpoints
+*.npy
