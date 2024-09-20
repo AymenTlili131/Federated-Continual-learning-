@@ -1,6 +1,6 @@
 # To get setup : 
 all the following files should go Under "New" after you clone this repo 
-MSE.ipynb and wsiayn are the notebooks that handle :
+MSE.ipynb and wsiayn.ipynb are the notebooks that handle :
 
 + load Autoencoder architecture
   > "from Double_input_transformer import CustomDataset,TransformerAE"
