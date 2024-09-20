@@ -27,7 +27,7 @@ MSE.ipynb and wsiayn.ipynb are the notebooks that handle :
 the model zoo was trained using files such as Silu.py and target.py . feel free to inspect them 
 
 + Zoo.csv and Distilled data and loadable npy : [here](https://drive.google.com/drive/folders/1_dOrA9PlHdLpoJHyeWwACRKcF-RLTigp?usp=sharing)
-+ Screenshots used during the making of this proposal : [here](https://drive.google.com/drive/folders/1MSocnYbi-nzVE5GVbNPO-ont64scrvEL?usp=drive_link)
++ Screenshots used during the making of this proposal : [here](https://drive.google.com/drive/folders/1MSocnYbi-nzVE5GVbNPO-ont64scrvEL?usp=sharing)
 + Prediction and Finetuning  weights as well as some metrics and distances : [here](https://drive.google.com/drive/folders/16sbcyhWOfVtU1HGpFoOls0RrXxTk4TI0?usp=sharing)
 
 this repo provides better methods https://github.com/VICO-UoE/DatasetCondensation on advanced datasets than the base dataset distillation method we opted to use because it was already available for MNIST https://github.com/SsnL/dataset-distillation
