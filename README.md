@@ -12,6 +12,8 @@ MSE.ipynb and wsiayn are the notebooks that handle :
 + finetuning on limited size data (20%,10%,5%)(epoch-wise,step-wise precision)
 + create the boxplots for post finetuning analysis on the test set for various loss implementation
 
+----------------
+
 
 * the file TDA of weights implements the **Mapper** algotihm for each loss functions "AE epoch {0/best} {num_epochs_training}.csv" and an indication of the loss function sometimes in the name .
 * that file splits the Auto-encoder testset forward passes into Ground Truth (GT) , Freshly predicted weights (PD) and Finetuned Weights (FN)
