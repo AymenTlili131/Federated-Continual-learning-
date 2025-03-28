@@ -77,25 +77,36 @@ class CustomDataset(TensorDataset): #L_activations=["gelu","relu","silu","leakyr
         L_Exp=[]
         L_ACC=[]
         L_indexes=[]
-        
-        for i in range(len(batch)):
-                rowk=self.df[(self.df["label"]=='{}'.format(batch[i][0]))&(self.df["epoch"]==int(self.D_epoch[str(batch[i][2])]))&(self.df[self.D_activ[str(batch[i][3])]]==float(1))]
+        skipped=0
+        for c in range(len(batch)):
+                try:
+                    rowk=self.df[(self.df["label"]=='{}'.format(batch[i][0]))&(self.df["epoch"]==int(self.D_epoch[str(batch[c][2])]))&(self.df[self.D_activ[str(batch[c][3])]]==float(1))]
+                except Exception as e:
+                    skipped=skipped+1
+                    continue
                 L_Stream1.append(torch.from_numpy(rowk[self.params_cols].to_numpy().astype('float32')))
                 ind1=int(rowk.index[0])
                 ACC1=self.df.loc[ind1]["Accuracy"]
 
-                
 
                 
-                rowk=self.df[(self.df["label"]=='{}'.format(batch[i][1]))&(self.df["epoch"]==int(self.D_epoch[str(batch[i][2])]))&(self.df[self.D_activ[str(batch[i][3])]]==float(1))]
+
+                try:
+                    rowk=self.df[(self.df["label"]=='{}'.format(batch[c][1]))&(self.df["epoch"]==int(self.D_epoch[str(batch[c][2])]))&(self.df[self.D_activ[str(batch[c][3])]]==float(1))]
+                except Exception as e:
+                    skipped=skipped+1
+                    continue
                 L_Stream2.append(torch.from_numpy(rowk[self.params_cols].to_numpy().astype('float32')))
                 ind2=int(rowk.index[0])
                 ACC2=self.df.loc[ind2]["Accuracy"]
                 
-                
-                tg=batch[i][0]+batch[i][1]
-                tg.sort()
-                rowk=self.df[(self.df["label"]=='{}'.format(tg))&(self.df["epoch"]==int(self.D_epoch[str(batch[i][2])]))&(self.df[self.D_activ[str(batch[i][3])]]==float(1))]
+                try:
+                    tg=batch[c][0]+batch[c][1]
+                    tg.sort()
+                    rowk=self.df[(self.df["label"]=='{}'.format(tg))&(self.df["epoch"]==int(self.D_epoch[str(batch[c][2])]))&(self.df[self.D_activ[str(batch[i][3])]]==float(1))]
+                except Exception as e:
+                    skipped=skipped+1
+                    continue
                 ind3=int(rowk.index[0])
                 tgt.append(torch.from_numpy(rowk[self.params_cols].to_numpy().astype('float32')))
                 ACC3=float(rowk["Accuracy"].values)
@@ -103,20 +114,22 @@ class CustomDataset(TensorDataset): #L_activations=["gelu","relu","silu","leakyr
 
                 L_ACC.append([ACC1,ACC2,ACC3])
                 L_indexes.append([ind1,ind2,ind3])
-
-        Stream1=torch.stack(L_Stream1).squeeze()
-        Stream2=torch.stack(L_Stream2).squeeze()
-        target=torch.stack(tgt).squeeze()
-        
-        #Stream2=Stream2.reshape((int(Stream2.shape[0]),1, int(Stream2.shape[1])))
-        #target=target.reshape((target.shape[0],1, target.shape[1]))
-        #print(Stream1.shape,Stream2.shape,target.shape)
-        
-        loaded = torch.stack([Stream1,Stream2,target],dim=1)
-        
-        ACC=L_ACC
-        batch_indices=L_indexes
-        artifacts= loaded,batch,ACC,batch_indices
+        try:
+            Stream1=torch.stack(L_Stream1).squeeze()
+            Stream2=torch.stack(L_Stream2).squeeze()
+            target=torch.stack(tgt).squeeze()
+            
+            #Stream2=Stream2.reshape((int(Stream2.shape[0]),1, int(Stream2.shape[1])))
+            #target=target.reshape((target.shape[0],1, target.shape[1]))
+            #print(Stream1.shape,Stream2.shape,target.shape)
+            
+            loaded = torch.stack([Stream1,Stream2,target],dim=1)
+            
+            ACC=L_ACC
+            batch_indices=L_indexes
+            artifacts= loaded,batch,ACC,batch_indices
+        except:
+            artifacts=None
 
         return artifacts
     
