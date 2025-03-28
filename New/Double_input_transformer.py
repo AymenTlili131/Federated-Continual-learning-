@@ -48,90 +48,117 @@ from collections import OrderedDict
 def batchify(lst, batch_size):
     return [lst[i:i+batch_size] for i in range(0, len(lst), batch_size)]
 
-class CustomDataset(TensorDataset): #L_activations=["gelu","relu","silu","leakyrelu","sigmoid","tanh"]
-    def __init__(self,L_exp,batch_size=300,df_path="./data/Merged zoo.csv"):
-
+class CustomDataset(TensorDataset):
+    def __init__(self, L_exp, batch_size=300,batch_limit=100, df_path="./data/Merged zoo.csv"):
         self.df_path = df_path
-        self.df=pd.read_csv(df_path)
-        self.L_exp=L_exp
-        self.params_cols=list(self.df.columns[17:-2])
+        self.df = pd.read_csv(df_path)
+        self.L_exp = L_exp
+        self.batch_limit=batch_limit
+        self.params_cols = list(self.df.columns[17:-2])
+        
         def batchify(lst, batch_size):
             return [lst[i:i+batch_size] for i in range(0, len(lst), batch_size)]
 
-        self.batchs=batchify(self.L_exp, batch_size)
-        self.D_epoch={'0':"36",'1':"31",'2':"21",'3':"26",'4':"11",'5':"16"}
-        self.D_activ={'0':"gelu",'1':"relu",'2':"silu",'3':"leakyrelu",'4':"sigmoid",'5':"tanh"}
-        
+        self.batchs = batchify(self.L_exp, batch_size)
 
-    def __len__(self):
-        return len(self.L_exp) #num_sublists #len(self.exp)
+        limit=min(self.batch_limit,len(self.batchs))
+        self.batchs = self.batchs[:limit]
+        self.D_epoch = {'0': '11', '1': '16', '2': '21', '3': '26', '4': '31', '5': '36'}
+        self.D_activ = {'0': "gelu", '1': "relu", '2': "silu", '3': "leakyrelu", '4': "sigmoid", '5': "tanh"}
     
+    def find_nearest_epoch(self, target_epoch):
+        available_epochs = sorted(map(int, self.D_epoch.values()))
+        #print(available_epochs)
+        while target_epoch not in available_epochs and target_epoch >= min(available_epochs):
+            target_epoch -= 5
+        return str(target_epoch) if target_epoch in available_epochs else None
+    
+    def __len__(self):
+        return len(self.batchs)
     
     def __getitem__(self, idx):
+        batch = self.batchs[idx]
+        L_Stream1, L_Stream2, tgt = [], [], []
+        L_ACC, L_indexes = [], []
         
-        batch=self.batchs[idx]
-        L_Stream1=[]
-        L_Stream2=[]
-        tgt=[]
-        
-        L_Exp=[]
-        L_ACC=[]
-        L_indexes=[]
-        skipped=0
         for c in range(len(batch)):
-                try:
-                    rowk=self.df[(self.df["label"]=='{}'.format(batch[i][0]))&(self.df["epoch"]==int(self.D_epoch[str(batch[c][2])]))&(self.df[self.D_activ[str(batch[c][3])]]==float(1))]
-                except Exception as e:
-                    skipped=skipped+1
-                    continue
-                L_Stream1.append(torch.from_numpy(rowk[self.params_cols].to_numpy().astype('float32')))
-                ind1=int(rowk.index[0])
-                ACC1=self.df.loc[ind1]["Accuracy"]
-
-
+            try:
+                label1, label2, epoch_key, activ_key = batch[c]
+                target_epoch = self.D_epoch[str(epoch_key)]
+                activation = self.D_activ[str(activ_key)]
+                
+                row1 = self.df[(self.df["label"] == str(label1)) &
+                               (self.df["epoch"] == target_epoch) &
+                               (self.df[activation] == 1.0)]
+                
+                while row1.empty:
+                    target_epoch = self.find_nearest_epoch(int(target_epoch))
+                    row1 = self.df[(self.df["label"] == str(label1)) &
+                                   (self.df["epoch"] == target_epoch) &
+                                   (self.df[activation] == 1.0)]
+                    if int(target_epoch)<10 :
+                        break
                 
 
-                try:
-                    rowk=self.df[(self.df["label"]=='{}'.format(batch[c][1]))&(self.df["epoch"]==int(self.D_epoch[str(batch[c][2])]))&(self.df[self.D_activ[str(batch[c][3])]]==float(1))]
-                except Exception as e:
-                    skipped=skipped+1
-                    continue
-                L_Stream2.append(torch.from_numpy(rowk[self.params_cols].to_numpy().astype('float32')))
-                ind2=int(rowk.index[0])
-                ACC2=self.df.loc[ind2]["Accuracy"]
+                target_epoch = self.D_epoch[str(epoch_key)]
+                row2 = self.df[(self.df["label"] == str(label2)) &
+                               (self.df["epoch"] == target_epoch) &
+                               (self.df[activation] == 1.0)]
                 
-                try:
-                    tg=batch[c][0]+batch[c][1]
-                    tg.sort()
-                    rowk=self.df[(self.df["label"]=='{}'.format(tg))&(self.df["epoch"]==int(self.D_epoch[str(batch[c][2])]))&(self.df[self.D_activ[str(batch[i][3])]]==float(1))]
-                except Exception as e:
-                    skipped=skipped+1
-                    continue
-                ind3=int(rowk.index[0])
-                tgt.append(torch.from_numpy(rowk[self.params_cols].to_numpy().astype('float32')))
-                ACC3=float(rowk["Accuracy"].values)
+                while row2.empty:
+                    target_epoch = self.find_nearest_epoch(int(target_epoch))
+                    row2 = self.df[(self.df["label"] == str(label2)) &
+                                   (self.df["epoch"] == target_epoch) &
+                                   (self.df[activation] == 1.0)]
+                    if int(target_epoch)<10 :
+                        break
+
+                   
+                tgt_label = sorted([label1, label2])
+                target_epoch = self.D_epoch[str(epoch_key)]
+                row3 = self.df[(self.df["label"] == str(tgt_label)) &
+                               (self.df["epoch"] == target_epoch) &
+                               (self.df[activation] == 1.0)]
                 
+                while row3.empty:
+                    target_epoch = self.find_nearest_epoch(int(target_epoch))
+                    row3 = self.df[(self.df["label"] == str(tgt_label)) &
+                                   (self.df["epoch"] == target_epoch) &
+                                   (self.df[activation] == 1.0)]
+                    if int(target_epoch)<10 :
+                        break
+                    
+                if row1.empty or row2.empty or row3.empty:
+                    continue
+                else :
+                    L_Stream1.append(torch.tensor(row1[self.params_cols].values, dtype=torch.float32))
+                    ind1 = row1.index[0]
+                    ACC1 = self.df.loc[ind1, "Accuracy"]
 
-                L_ACC.append([ACC1,ACC2,ACC3])
-                L_indexes.append([ind1,ind2,ind3])
-        try:
-            Stream1=torch.stack(L_Stream1).squeeze()
-            Stream2=torch.stack(L_Stream2).squeeze()
-            target=torch.stack(tgt).squeeze()
-            
-            #Stream2=Stream2.reshape((int(Stream2.shape[0]),1, int(Stream2.shape[1])))
-            #target=target.reshape((target.shape[0],1, target.shape[1]))
-            #print(Stream1.shape,Stream2.shape,target.shape)
-            
-            loaded = torch.stack([Stream1,Stream2,target],dim=1)
-            
-            ACC=L_ACC
-            batch_indices=L_indexes
-            artifacts= loaded,batch,ACC,batch_indices
-        except:
-            artifacts=None
+                    L_Stream2.append(torch.tensor(row2[self.params_cols].values, dtype=torch.float32))
+                    ind2 = row2.index[0]
+                    ACC2 = self.df.loc[ind2, "Accuracy"]
 
-        return artifacts
+                    ind3 = row3.index[0]
+                    tgt.append(torch.tensor(row3[self.params_cols].values, dtype=torch.float32))
+                    ACC3 = row3["Accuracy"].values[0]
+                
+                    L_ACC.append([ACC1, ACC2, ACC3])
+                    L_indexes.append([ind1, ind2, ind3])
+
+            
+            except Exception as e:
+                print(f"{e}")
+                continue  # Skip problematic entries safely
+        
+            Stream1 = torch.stack(L_Stream1).squeeze()
+            Stream2 = torch.stack(L_Stream2).squeeze()
+            target = torch.stack(tgt).squeeze()
+            loaded = torch.stack([Stream1, Stream2, target], dim=1)
+        
+        
+        
+        return loaded, batch, L_ACC, L_indexes
     
     
     

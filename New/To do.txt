@@ -1,3 +1,12 @@
+KAN
+Accuracy per class
+histogram of eigenvalues
+Linkedin guy papers
+
+sh file
+
+
+
 MAPPER of INPUT weights as well
 better visualization of eignevalues(for input models and target models : find loss function for it)
 implement example with gromov wasserstein loss
@@ -5,3 +14,5 @@ KAN example
 finish topo and vue course
 implement other approaches/models
 Test 2-3 dynamic fusions
+
+
