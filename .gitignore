@@ -4,6 +4,7 @@
 *.mat
 *.pt
 Pictures
+New/AE epochinitial original -1.pth
 Old/Somme AE
 Old/PFE/Screenshots/
 Old/PCA+examples
@@ -16,6 +17,7 @@ Old/PFE/Code/NeurIPS_2021-Weight_Space_Learning/
 New/data/SplitMnist
 New/checkpoints
 New/data
+New/Experiments
 Intermediary results 0/*
 Tracking/
 New/wandb/

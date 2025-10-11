@@ -1,0 +1,49 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{ynt/global//global/global}
+    \entry{PFGPlots}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=675154bb26f4fcccf8f7e70a9fb6cfd7}{%
+           family={PFGPlots},
+           familyi={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{675154bb26f4fcccf8f7e70a9fb6cfd7}
+      \strng{fullhash}{675154bb26f4fcccf8f7e70a9fb6cfd7}
+      \strng{bibnamehash}{675154bb26f4fcccf8f7e70a9fb6cfd7}
+      \strng{authorbibnamehash}{675154bb26f4fcccf8f7e70a9fb6cfd7}
+      \strng{authornamehash}{675154bb26f4fcccf8f7e70a9fb6cfd7}
+      \strng{authorfullhash}{675154bb26f4fcccf8f7e70a9fb6cfd7}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{A LaTeX package to create plots.}
+      \verb{urlraw}
+      \verb https://pgfplots.sourceforge.net/
+      \endverb
+      \verb{url}
+      \verb https://pgfplots.sourceforge.net/
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

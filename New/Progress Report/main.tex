@@ -1,0 +1,745 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% --------------------------------------------------------
+% Tau
+% LaTeX Template
+% Version 2.4.4 (28/02/2025)
+%
+% Author: 
+% Guillermo Jimenez (memo.notess1@gmail.com)
+% 
+% License:
+% Creative Commons CC BY 4.0
+% --------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[8pt,a4paper,onecolumn,twoside]{tau-class/tau}
+\usepackage[english]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{algorithm2e}
+
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{green},
+  stringstyle=\color{red}
+}
+
+
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    captionpos=b,
+    language=Python,
+    backgroundcolor=\color{gray!5},
+    keywordstyle=\color{blue},
+    commentstyle=\color{green},
+    stringstyle=\color{red},
+    showstringspaces=false
+}
+
+%% Spanish babel recomendation
+% \usepackage[spanish,es-nodecimaldot,es-noindentfirst]{babel} 
+
+%% Draft watermark
+% \usepackage{draftwatermark}
+
+%----------------------------------------------------------
+% TITLE
+%----------------------------------------------------------
+
+\journalname{20/04/2025 Report}
+%\title{Writing a lab report or academic article with tau \LaTeX\ class}
+\title{Technical Report for TransformerAE Training Process for weight/task merging}
+%----------------------------------------------------------
+% AUTHORS, AFFILIATIONS AND PROFESSOR
+%----------------------------------------------------------
+
+\author[a,1]{Aymen Tlili}
+%\author[a,2]{Bassem Ben Hamed}
+%\author[b,c,3]{Author Three}
+
+%----------------------------------------------------------
+
+\affil[a]{Faculty of Sciences of Sfax}
+%\affil[b]{Affiliation of author two}
+%\affil[c]{Affiliation of author three}
+
+\professor{Supervising Professor:Bassem Ben Hamed}
+
+%----------------------------------------------------------
+% FOOTER INFORMATION
+%----------------------------------------------------------
+
+\institution{College name}
+\footinfo{\LaTeX\ Template}
+\theday{July 26, 2024}
+\leadauthor{Author last name et al.}
+\course{Creative Commons CC BY 4.0}
+
+%----------------------------------------------------------
+% ABSTRACT AND KEYWORDS
+%----------------------------------------------------------
+
+\begin{abstract}    
+    % Welcome to tau ($\tau$) \LaTeX\ class designed especially for your lab reports or academic articles. In this example template, we will guide you through the process of using and customizing this document to your needs. For more information of this class check out the appendix section. There, you will find codes that define key aspects of the template, allowing you to explore and modify them.
+    In This report , I elaborate the methodology used to train our Transformer Architecture for Task Merging via weight regression or sequence-to-sequence modeling.as well as observations and specificities of using this task in the context of continual learning with the ultimate aim being uncovering what constitutes learning in a neural net and what's benign noise .
+    
+\end{abstract}
+
+%----------------------------------------------------------
+
+\keywords{\LaTeX\ Computer Vision, Hyper-representation, AutoML, MNIST, Continual learning , Sequence modeling }
+
+%----------------------------------------------------------
+
+\begin{document}
+		
+    \maketitle 
+    \thispagestyle{firststyle} 
+    \tauabstract 
+    % \tableofcontents
+    % \linenumbers 
+    
+%----------------------------------------------------------
+
+\section{Introduction}
+
+    % \taustart{W}elcome to \textit{tau class} for preparing your lab reports or academic articles. Throughout this guide, we will show you how to use this template and how to make modifications to this class. 
+	
+    % This class includes the following files placed in the ‘tau-class’ folder: tau.cls, tauenvs.sty, taubabel.sty and README.md. Also, a main.tex, tau.bib and some examples. 
+    \taustart{E}minating from needs based on continuous learning and fast DevOps operations that require adapting models to an ever-flowing amount of data: The task of keeping a model up-to-date with current patterns and trends without losing previous knowledge and generalization power is a major challenge as the hardware cost ,time investment,expertise needed and the environmental reprocussions of training good-fit models that are able to perform both in and out of the learning dataset distribution  .
+
+    Based on existing hypotheses that neural networks are just a compact format of the representations possible for a dataset and admissable conjecture about the universal approximation theorem benifits from repeating certain challenging examples that lie on the decision boundary more than easy-to-fit ones, We opt to focus on a subclass of deep neural networks known as convolutional NNs .These models are moderatly adept at resolving tasks like classification/regression or unsupervised context ones and with such diversity we fix a singular architecture and vary the weights and biases are that supposed carriers of information about the geometry of the learned manifold.
+
+    Previous Hyper-representation works focused on denoising parameters and strategically sampling a hidden representation of these CNNs from a meta-learner Transformer and then finetuning them into functional learners but used a set of CNNs that are denoted `model zoo` which were only exposed to data superficially hence underfitting caused bad Accuracy metric results on classification tasks.The latent representations in the hidden neural network are usually the most spectrally compact and filled with informative features critical to the output's quality.In the transformer AutoEncoder used this was the (bottle-)neck represented as a dense Layer relating a downsampling encoder fed poor quality CNNs and it's mirroring upsampling decoder which produced the series of positionally tokenized denoised CNN parameters.
+
+    This model zoo is ill-fit for our task of Merging knowledge between 2 CNNs to produce a 3rd CNN with same number of parameters as that zoo's models are no better than coin flippers whereas Continual-learning assumes the input models have a task-incrimental or class-incremental setting or even same tasks but with concept drifting features i.e time-varying distribution making old models useless against new tasks.This is quickly remedied by finetuning with fresh/new data but the compromise with that is sacrificing knowledge from earlier model version and expensive-to-store older models and giving rise to the need to resort to one or hybrids of 3 categories of strategies to combat catastrophic forgetting and maintain old representations in new models :
+    \begin{itemize}
+     \item Regularization methods: L1 constain new models' parameters to not stray too far away from their counterparts in older models.
+     \item Replay methods :save Information-rich/Class-representative examples or even GANs to produce old data on demand
+     \item Architecture-incrimental methods :Keep an adapter/task-specific layer stored    \end{itemize}
+
+\section{Contributions:}
+\begin{itemize}
+ \item Show the effect of the loss function choice on the latent representations performance just after Inference and after finetuning [continuation of Layer-wise-Loss normalization proposed in hyperrepresentation paper]
+ \item Propose a new CNNs Zoo best-fit for \underline{Class-incremental learning} with proficient learners with high accuracy ceilings [unlike hyper-representation paper , have good accuracy and trained for 40 epochs with early stopping vs 5-10-25 epoch weak learning rate models]
+ \begin{itemize}
+  \item Merging knowledge
+  \item Substracting knowledge(model unlearning)
+  \item minimize the reliance on real data (Federated Learning application)
+ \end{itemize}
+ \item Showcase the \textbf{topological/spectral differences} in the \underline{presence or absence of certain classes}/class combinations and derive optimizations methods from them (currently using loss terms)
+ \item Clearly \underline{Seperate} the topological(PH/in-layer distribution) and spectral(eigenvalue/FFT distribution) that allow fintuning to reach in 200-500 steps of the first pair of epochs high performance between Transformer predicted weights and fintuned/ground-truth models.
+ \item Find What properties are maintained between the ground truth and finetuned models that we consider intrinsic for performance
+ \item See what eventual combination or singular Loss best expresses what the meta learner should select in a sequence of weights
+ \item Eventually \underline{sparsly} feed only necessary weights to achieve a certain task and maintain generalisability across out-of-distribution classes
+  \item Eventually use \underline{KAN}s to explicitly derive the formula between predicted and finetuned models
+\end{itemize}
+
+
+
+
+Good Performance is rated across multiple facets for what constitutes Learning
+\begin{itemize}
+ \item CNN accuracy percentage after prediction IID and OOD
+ \item CNN accuracy percentage after finetuning IID and OOD
+ \item How fast the predicted CNN catches up to it's \textbf{parents'} accuracy
+ \item How stable the predicted CNNs Accuracy is after each epoch of training (no deterioration as it continues to train)
+ \item Transformer Loss value and how well it's correlated to the CNN performance
+ \item How Clearly seperable are Classes [do we need to introduce something like diffusion-aware bernoulli mask to avoid the model giving the same output regardless of input? if this prediction's collapse to a singular model is benign , how good is that model ? ]
+ \item Continual learning metrics like forgetting(loss of acc on old) and forward-learning(how older classes [presence/Absence or order of appearance] contributed to making future classes easier to learn
+\end{itemize}
+
+
+\section{Dataset of weights (name pending):}
+    \subsection{Setting:}
+        We define the images $I_{C}$ and their respective labels $Y_{C}$
+        with $Y=[Y_{0},Y_{1},..,Y_{9}]$ corresponding to the specific Classes $C_{i}$ from the MNIST Dataset.
+        The following sub-section elaborates how we fit a convolutional neural network model $CNN_{[g,i,e]}^{[Y_{C}]}$ hence having weights $w_{[g,i,e]}^{[l,Y_{C}]}$ with \textbf{l } being the index of the Layer in our 3-convolution Layers 2-dense Layers fixed architecture model.
+        We limit this work temporarily to working with kaiming uniform initialization zoo as it had a good median of results and least outliers during training
+
+
+        \begin{tabular}{|c|c|c|c|c|c|c|}
+
+\hline
+Possible values & 0 & 1 & 2 & 3 & 4 & 5 \\
+\hline
+activation A & gelu & relu & silu & leakyrelu & sigmoid & tanh \\
+
+\hline
+checkpoint Epoch e & 11 & 16 & 21 & 26 & 31 & 36 \\
+\hline
+initialization i & xavier uniform & xavier normal & uniform & normal & kaiming normal & kaiming uniform\\
+\hline
+\end{tabular}
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}[t]{0.6\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{3.1 Setting/36468 KUniform zoo .png}
+    \subcaption{36468 row/model Kaiming Uniform init zoo early columns and Experience identifier label 1-hot encoding}
+    \label{fig:figa}
+\end{minipage}
+\begin{minipage}[t]{0.275\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{3.1 Setting/36468 KUniform zoo rows.png}
+    \subcaption{Last columns and accuracy and the epoch identifier }
+    \label{fig:figb}
+\end{minipage}
+
+\caption{The .csv format opfted for in our zoo}
+\label{fig:examplefloat}
+\end{figure}
+
+
+    \subsection{Training:}
+
+        We train every subcombination possible of CNNs classification on 10-label MNIST Dataset to clearly target the effect of the presence of a class or it's absence i.e models operating on 2-10 classes.We vary the initialization distribution and activation used in the weights for diversity and robusteness of the learned models.That being said , we fix the intial seed, making models sharing the same init have the same exact sampling first origin checkpoint which will vary eventually on classes it's exposed to.
+
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}[t]{0.2\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{3.1 Setting/CNN architecture.png}
+    \subcaption{Class CNN declaration\cite{PFGPlots}}
+    \label{fig:figa}
+\end{minipage}
+\begin{minipage}[t]{0.13\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{3.1 Setting/CNN weights.png}
+    \subcaption{Layer declaration Weights and channels}
+    \label{fig:figb}
+\end{minipage}
+
+\caption{Showcasing the dataset checkpoints before building .csv format \cite{PFGPlots}.}
+\label{fig:examplefloat}
+\end{figure}
+
+    The file 'Silu.py' shows an example of a script we let run on the same remote server.on other machines we change the activation in the activation list.The training is done until convergence and satisfaction conditions are met.
+    \begin{itemize}
+     \item 40 epochs of training are originally declared
+     \item checkpointing happens only every 5 epochs after the 10th and only if Validation-set accuracy for that \textbf{Experience} (set of classes chosen).
+     \item Early stopping rules :A stagnation counter increments until it meets a patience parameters. If model validation accuracy 'stagnates' for 3 epochs. stagnation is defined as staying within a range of a Margin 0.05\% accuracy from the last epoch's accuracy.
+     \item The early stopping means we can have CNNs scattered over different bins of epochs.The exact epoch is saved along the checkpoint but for the formatting of the 'Merged Zoo.csv' we save the model weights along it's closest predecessor bin representer.
+     \textit{For example :} a model exiting on epoch 19 is saved along models in the epoch 15 bin and is not trained or logged further than 19 epochs
+    \end{itemize}
+
+    The architecture is the 1-channel architecture used in the hyper-representation paper.We log the accuracy and loss of every single CNN in numpy arrays along of the multiclass confusion matrix and create a gif out of them.
+
+    [details about optimizer Adam+scheduler CyclicLR choice/learning rate/usage of avalanche to create SplitMnist and save each class' images in a seperate folder can be explained later but as per standard cross-entropy was the loss and no data augmentation was used ]
+
+
+        \begin{figure*}[tp] % t for position at the top of the current page; b for position at the bottom; p for new page
+		\centering
+		  \begin{subfigure}[b]{0.27\linewidth} % Fig (a)
+			\includegraphics[width=\linewidth]{3.2 Training/Checkpoints size.png}
+			\caption{Total size of subcombinations of MNIST checkpoints for inits and activations}
+			\label{fig:figa}
+		\end{subfigure}
+			\hspace{20pt}   % Space between the figures
+		\begin{subfigure}[b]{0.375\linewidth} % Fig (b)
+			\includegraphics[width=\linewidth]{3.2 Training/Experiences.png}
+			\caption{Example Nomenclature of an Experience}
+			\label{fig:figb}
+		\end{subfigure}
+				\begin{subfigure}[b]{0.375\linewidth} % Fig (b)
+			\includegraphics[width=\linewidth]{3.2 Training/Tree View of [8,9].png}
+			\caption{Example of Tree view of data stored about CNN checkpoint}
+			\label{fig:figb}
+		\end{subfigure}
+		\caption{Showcasing the the Dataset checkpoints before building .csv format \cite{PFGPlots}.}
+		\label{fig:examplefloat}
+        \end{figure*}
+
+
+    \subsection{Declaring Scenarios:}
+    As explained above , we have early stopping for the CNNs meaning that some don't make it to the final 40 epochs ,hence a \underline{sub-scenario} is defined with
+\begin{itemize}
+ \item Activation \textbf{A}
+ \item Set of Experiences \textbf{E}
+ \item a parameter of the number of allowed overlapping classes \textbf{m}
+\end{itemize}
+    The `Create training scenarios.ipynb` elaborates how we created 2 sets of scenarios
+    \begin{enumerate}
+     \item sub-scneraio type 1:from [0-9] with 0,1,2 overlapping classes
+     \item sub-scneraio type 2:from [0-5] with up to 4 overlapping classes
+    \end{enumerate}
+A training Scenario is finally decided by taking S=(Sb,epoch) with all initializations included and that is used to declare the run title in WeightsAndBiases.com \underline{(Wandb)} our logging tool and using our CustomDataset Class.
+
+The idea to have overlapping classes was to see if we can identify a topological or spectral denominator or to see if it would make learning Weights that DID NOT require finetuning easier.
+For now all experiments are done with 0 overlap and so the fusion of knowledge happens across pairs and by varying the the pairs themselves we force the Transformer to learn to Fuse independently of the weight input.
+
+    \subsection{Statistical Analysis:}
+        every layer has it's own mean and std of values [I'll upload images later]
+
+
+        Some activations are better early and stay better as training continues
+
+
+        https://github.com/fchamroukhi/HMMR\_r is an idea . regression on each layer one by one is another (would need multiple models or 1-sequence model with input being the length of the largest CNN layer and we pad the rest of the sequence for smaller layers -but with what-)
+\section{Meta-Learner Methodology:}
+    \subsection{Architecture:}
+\begin{center}
+\begin{tabular}{llll}
+model Arguement & description & Our experiments & Hyper-representation paper\\
+-- & number of encoder & 2 & 1\\
+d\_model & Dimensionality of model embeddings (input/output tokens). & 960 & 972\\
+N & Number of stacked encoder-decoder layers (blocks). & 4 & 4\\
+heads & Number of attention heads in each MultiHeadAttention layer. & 4 & 12\\
+d\_ff & Hidden dimension in FeedForward networks (typically 4 d\_model). & 960 & 1140\\
+neck & Latent/bottleneck dimension — output of encoder, input to decoder. & 512 & 700\\
+dropout & Dropout probability applied after attention and FF layers. & 0.07 & 0.01\\
+max\_seq\_len & Max sequence length for positional encoding & 50 & 50\\
+epochs & Training epochs & 800 & 1750\\
+batch\_size & batch size & 36 & 500\\
+--  & data augmentation with neurone symmetry permuteation & no & 25000
+\end{tabular}
+\end{center}
+
+
+
+    \
+\begin{figure}[htbp]
+\centering
+\begin{minipage}[t]{\linewidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{4.1 Architecture/Early functions.png}
+    \subcaption{Helper functions and modules for Tranformer}
+    \label{fig:figa}
+\end{minipage}
+\begin{minipage}[t]{\linewidth}
+    \centering
+    \includegraphics[width=0.9\linewidth]{4.1 Architecture/Transformer.png}
+    \subcaption{Decoder Layer and Tranformer declaration}
+    \label{fig:figb}
+\end{minipage}
+
+\caption{Transformer Architecture}
+\label{fig:examplefloat}
+\end{figure}
+
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.6\linewidth]{4.1 Architecture/num_params.png}
+    \caption{number of parameters per layer}
+    \label{fig:fig3}
+\end{figure}
+
+    \subsection{Methodology:}
+    we define the following :
+    \begin{itemize}
+    \item $\tilde{y_{C}}$ : is the ground truth label by a CNN
+    \item $\hat{y_{C}}$ : is the predicted label by a CNN
+
+    \item$\tilde{w}_{[g,i,e]}^{[l,Y_{C}]}$: are the ground truth weights of model from our zoo
+    on $I_{C}$
+    \item $\bar{w}_{[g,i,e]}^{[l,Y_{C}]}$: are the weights for a predicted CNN by the Transformer
+    \item $\bar{\bar{w}}_{[g,i,e]}^{[l,Y_{C}]}$: are the weights for a predicted CNN by the Transformer after finetuning on $I_{C}$
+
+    \item $\hat{z}_{t}^{ neck-1}$: is the latent representation after Encoder index $t \in [1,2]$.
+    \item $\hat{z}^{ neck}$: is the latent representation after the neck dense layer.
+    \end{itemize}
+The target task is to predict:
+\[
+\text{CNN3}_{[g,i,e]}^{[Y_{C3}]} \big( \bar{w}_{[g,i,e]}^{[l,Y_{C3}]} \,\big|\, \tilde{w}_{[g,i,e]}^{[l,Y_{C1}]}) \, \cup \tilde{w}_{[g,i,e]}^{[l,Y_{C2}]}) \, \big)
+\]
+with weights obtained via:
+\[
+\bar{w}_{[g,i,e]}^{[l,Y_{C3}]}= \text{Decoder}(\hat{z}^{ neck})
+={Decoder}\big( \text{Dense}( \, \\{Encoder1}(\hat{z}_{1}^{ neck-1})  \,\Vert\, \text{Encoder2}(\hat{z}_{2}^{ neck-1}) \, ) \big)
+={Decoder}\big( \text{Dense}( \, \text{Encoder1}(\tilde{w}_{[g,i,e]}^{[l,Y_{C1}]}) \,\Vert\, \text{Encoder2}(\tilde{w}_{[g,i,e]}^{[l,Y_{C2}]}) \, ) \big)
+,
+\]
+where $\Vert$ denotes concatenation, and $\tilde{w}_{[g,i,e]}^{[l,Y_{C1}]}$, $\tilde{w}_{[g,i,e]}^{[l,Y_{C2}]}$ are the ground truth weights of CNN1 and CNN2, respectively.
+
+Given the pair:
+\begin{itemize}
+\item $\text{CNN1}_{[g,i,e]}^{[Y_{C1}]} \big( [Y_{C1}] \,\big|\, I_{C1} \big)$
+    \item $\text{CNN2}_{[g,i,e]}^{[Y_{C2}]} \big( [Y_{C2}] \,\big|\, I_{C2} \big)$
+    \end{itemize}
+the combined experience uses implicitly input union $I_{C1} \cup I_{C2}$ and outputs CNNs to be performance-checked on concatenation $[Y_{C1}, Y_{C2}] = Y_{C3}$ for their in-distribution metrics and $[0..    9]$-$Y_{C3}$ for out of distribution ones .
+
+
+
+
+    \subsection{Tokenizing Numerical Values:}
+    is done via a fixed dense layer `EmbedderNeuronGroup`
+    \subsection{Training Loop Algorithm:}
+\begin{algorithm}[H]
+\caption{Training Procedure for Double-Encoder Transformer for CNN Weight Prediction}
+\SetAlgoLined
+\KwIn{Weights of two source CNNs $(W_1, W_2)$, target CNN weights $W_t$, pretrained double-encoder Transformer $T_{\theta}$}
+\KwOut{Predicted target weights $\hat{W_t}$, performance diagnostics, and logged metrics}
+
+\BlankLine
+\textbf{Initialization:} \\
+Initialize $track \leftarrow 0$, gradients $\nabla \leftarrow 0$ \\
+Create mixed-precision \texttt{Accelerator} with bf16 precision \\
+Load list of scenarios $\{S_1, \dots, S_n\}$ from \texttt{./data/Scenario/} \\
+
+\ForEach{scenario $S_t$}{
+    Load training, validation, and test pairs: \\
+    $\text{train\_pair2}, \text{val\_pair2}, \text{test\_pair2} \leftarrow \text{np.load}(S_t)$ \\
+    Convert each pair to list of tensors $(W_1, W_2, W_t)$
+
+    \BlankLine
+    \textbf{Model setup:} \\
+    Initialize encoders $E_1, E_2$, transformer module $T_{\theta}$, and decoder $D$ \\
+    Initialize optimizers for encoder, decoder, and transformer \\
+    Move models to accelerator device and set them to training mode
+
+    \BlankLine
+    \textbf{Training Loop:} \\
+    \For{epoch $=1$ \KwTo $N_{epochs}$}{
+        Shuffle $\text{train\_pair2}$ \\
+        \For{each batch $(W_1^b, W_2^b, W_t^b)$}{
+            Encode: $z_1 \leftarrow E_1(W_1^b)$, $z_2 \leftarrow E_2(W_2^b)$ \\
+            Fuse latent codes: $z_f \leftarrow T_{\theta}(z_1, z_2)$ \\
+            Decode: $\hat{W_t^b} \leftarrow D(z_f)$ \\
+
+            Compute reconstruction loss $\mathcal{L}_{pred} = \| \hat{W_t^b} - W_t^b \|^2$ \\
+            Compute auxiliary metrics (distances, eigenvalues, persistent homology graphs) \\
+            Combine metrics into total loss $\mathcal{L}_{total}$ \\
+
+            Zero optimizer gradients \\
+            Backpropagate $\mathcal{L}_{total}$ and update model parameters \\
+            Clip gradients by norm to 1 \\
+
+            \BlankLine
+            \textbf{Logging:} \\
+            Log losses and metrics to Weights \& Biases: \\
+            - $\mathcal{L}_{pred}$, $\mathcal{L}_{total}$ \\
+            - Fisher / Wasserstein distances \\
+            - Eigenvalue spectra \\
+            - Mapper graph statistics and persistence diagrams \\
+            - Histograms of predicted vs. target weights \\
+
+        }
+        Optionally perform evaluation on validation pairs and save checkpoints
+    }
+
+    \BlankLine
+    Compute test set predictions $\hat{W_t}$ and log final distances and graphs
+}
+
+\textbf{Output:} trained model $T_{\theta}$ and full W\&B experiment log
+\end{algorithm}
+
+
+
+    \subsection{Loss functions used and effects:}
+        \subsubsection{Q-quantile loss:}
+
+        Measures distributional discrepancy at specific quantiles—robust to outliers, sensitive to tail behavior.
+
+Compute the Q‑quantile loss between the two flattened weight (or gradient) vectors to assess how their distributions differ at quantile Q  (e.g., median Q=0.5 , or extreme tails Q=0.01,0.99 ). This reveals whether one CNN’s parameters are systematically larger/smaller in certain regions of the distribution, which can indicate differences in learning dynamics, sparsity, or robustness.
+
+$\mathcal{L}_Q(\mathbf{w}^{(1)}, \mathbf{w}^{(2)})
+= \frac{1}{N} \sum_{i=1}^{N} \rho_Q\!\left( w^{(1)}_i - w^{(2)}_i \right),
+\quad
+\rho_Q(u) = u \bigl( Q - \mathbb{I}_{\{u < 0\}} \bigr)$,
+
+
+
+This loss is minimized when the Q -th quantile of the difference distribution is zero, i.e., the two CNNs align at that quantile.
+
+        \subsubsection{Frobenius Norm Jacobian (Loss):}
+
+Measures overall sensitivity discrepancy between two models via Jacobian difference.
+
+Compute the Frobenius norm of the difference between the Jacobians of the two CNNs (w.r.t. inputs or parameters). This quantifies how differently the models respond locally—useful for alignment, distillation, or stability analysis.
+
+$\mathcal{L}_{\mathrm{Frob}}
+= \left\| \mathbf{J}^{(1)} - \mathbf{J}^{(2)} \right\|_F
+= \sqrt{ \sum_{i=1}^{C} \sum_{j=1}^{D} \left( J^{(1)}_{ij} - J^{(2)}_{ij} \right)^2 }$,
+
+
+Minimizing this loss encourages the two networks to have similar local input–output geometry.
+        \subsubsection{Fisher Information Difference:}
+Measures intrinsic statistical dissimilarity between models via curvature of log-likelihood.
+
+Compute the Fisher Information Distance (FID) between the two CNNs by treating their parameter vectors as points on a statistical manifold endowed with the Fisher information metric. This captures how differently the models encode information—useful for comparing learning trajectories, robustness, or generalization.
+
+$\mathcal{D}_{\mathrm{Fisher}}(\boldsymbol{\theta}^{(1)}, \boldsymbol{\theta}^{(2)})
+= \inf_{\gamma} \int_0^1
+\sqrt{ \dot{\gamma}(t)^\top \, \mathcal{I}\big(\gamma(t)\big) \, \dot{\gamma}(t) } \; dt$,
+
+
+        \subsubsection{Contractive loss:}
+Penalizes sensitivity of hidden units to input—encourages robust, invariant representations.
+
+The contractive loss regularizes an autoencoder by minimizing the Frobenius norm of the encoder’s Jacobian w.r.t. input. Given weight matrix W  and hidden activations h=σ(Wx+b) , it approximates ∥∂h/∂x∥F2​  as ∑i​(hi​(1−hi​))2∥Wi,:​∥2 . Use it to compare two CNNs by computing this loss on their encoder-like layers or feature extractors—lower values indicate smoother, more stable feature maps.
+
+   $ \mathcal{L}_{\text{contractive}}
+= \lambda \sum_{i=1}^{H} \bigl( h_i (1 - h_i) \bigr)^2 \, \| \mathbf{w}_i \|_2^2
+= \lambda \sum_{i=1}^{H} \bigl( h_i (1 - h_i) \bigr)^2 \sum_{j=1}^{D} W_{ij}^2 $ ,
+
+This loss approximates λ∥∇x​h∥F2​ , promoting insensitivity to small input perturbations—ideal for comparing stability of learned representations across models
+
+        \subsubsection{Wasserstein Distance/Geomloss:}
+
+        Measures geometric discrepancy between distributions with smooth, differentiable approximation.
+
+Useful Implementation:
+Use the Sinkhorn (entropic-regularized) Wasserstein-2 distance to compare the two 1‑D distributions of flattened CNN weights or gradients. Despite being 1‑D, this formulation remains valid and differentiable, enabling use as a loss for aligning weight distributions, enforcing smoothness, or matching latent statistics during training. The entropic regularization (controlled by ε ) ensures computational efficiency via the Sinkhorn algorithm.
+$\mathcal{W}_{2,\varepsilon}^2(\mu, \nu)
+= \min_{\mathbf{P} \in \Pi(\mu,\nu)}
+\left\{
+\sum_{i,j} P_{ij} \, \|x_i - y_j\|^2
+\;-\; \varepsilon \, H(\mathbf{P})
+\right\}$,
+
+where
+
+    μ=N1​∑i=1N​δxi​​ , ν=N1​∑j=1N​δyj​​  are empirical measures from the two flattened vectors x,y∈R2464 ,
+    Π(μ,ν)  is the set of couplings (joint distributions with marginals μ,ν ),
+    H(P)=−∑i,j​Pij​logPij​  is the entropy of the transport plan,
+    ε>0  controls regularization strength,
+    The minimizer P∗  is obtained efficiently via the Sinkhorn iterations.
+
+
+In 1‑D, the unregularized W2​  has a closed form (W22​=N1​∑i​(x(i)​−y(i)​)2 , with sorted samples), but the Sinkhorn version is preferred when differentiability through the sorting operation is undesirable or when integrating into end‑to‑end training pipelines.
+
+Thus, minimizing W2,ε​(x,y)  encourages the two CNNs to have statistically and geometrically aligned weight/gradient distributions.
+
+
+        \subsubsection{Difference in Norm of the vector:}
+Measures global magnitude discrepancy—simple, scale-sensitive, ignores direction.
+
+Useful Implementation:
+Compute the absolute difference between the ℓ²‑norms of the two flattened weight (or gradient) vectors. This scalar loss captures whether one CNN has systematically larger or smaller overall parameter magnitude—useful for detecting norm drift, regularization effects, or initialization bias.
+
+$\mathcal{L}_{\|\cdot\|}
+= \bigl| \, \| \mathbf{w}^{(1)} \|_2 - \| \mathbf{w}^{(2)} \|_2 \, \bigr|
+= \left| \sqrt{ \sum_{i=1}^{2464} \bigl( w^{(1)}_i \bigr)^2 }
+        - \sqrt{ \sum_{i=1}^{2464} \bigl( w^{(2)}_i \bigr)^2 } \right|$,
+
+Minimizing this loss aligns the overall energy or scale of the two models, which can be a useful auxiliary objective in model compression, distillation, or weight-space interpolation.
+
+        \subsubsection{Auto-regressive Loss:}
+Enforces sequential fidelity—later chunks penalized relative to earlier prediction accuracy.
+
+This autoregressive MSE loss treats the 2464‑dimensional output as a sequence of chunks (e.g., layers or time steps). It computes per‑chunk MSEs and then penalizes each subsequent chunk proportionally to its error relative to the previous chunk’s error, scaled by learnable or predefined weights λ . This encourages the model to maintain or improve accuracy over the sequence—useful when comparing two CNNs’ weight trajectories or layer-wise reconstructions, where early layers should be reliably predicted before later ones.
+
+$\mathcal{L}_{\text{AR-MSE}}
+= \mathcal{L}_1
++ \sum_{k=2}^{K} \lambda_{k-1} \,
+\frac{\mathcal{L}_k}{\mathcal{L}_{k-1} + \varepsilon},
+\quad
+\mathcal{L}_k = \frac{1}{B \, |\mathcal{I}_k|}
+\sum_{b=1}^{B} \sum_{i \in \mathcal{I}_k}
+\bigl( \hat{y}^{(b)}_i - y^{(b)}_i \bigr)^2$,
+
+Minimizing LAR-MSE​  aligns models not just in absolute error but in progressive consistency across structured segments of the weight vector—ideal for layer‑wise or stage‑wise model comparison.
+
+        \subsubsection{MAPE Loss:}
+
+Measures relative prediction error—scale‑invariant, sensitive to small true values.
+
+Useful Implementation:
+Compute the Mean Absolute Percentage Error (MAPE) between two flattened 2464‑dimensional vectors (e.g., predicted vs. true weights or gradients). MAPE expresses average error as a percentage of the true magnitude, making it useful for comparing models across different scales or detecting systematic bias in parameter estimation. Avoid using it when true values contain zeros or near‑zeros (add a small ε  for stability).
+
+$\text{MAPE}(\mathbf{w}^{(1)}, \mathbf{w}^{(2)})
+= \frac{100\%}{N} \sum_{i=1}^{N}
+\frac{ \big| w^{(1)}_i - w^{(2)}_i \big| }{ |w^{(2)}_i| + \varepsilon },
+\quad N = 2464$,
+
+A low MAPE indicates that the two CNNs agree closely in relative terms—useful for model compression, weight transfer, or monitoring convergence in log‑scale parameter spaces.
+
+        \subsubsection{Layer-wise-loss Normalization:}
+
+Normalizes loss per layer to balance contribution across heterogeneous layer sizes.
+
+Useful Implementation:
+When comparing two CNNs via a reconstruction, distillation, or weight-matching loss over their flattened 2464‑dimensional parameter vectors, split the vector into per‑layer segments (e.g., conv weights, biases, BN params). Compute a base loss (e.g., MSE) per layer, then normalize each by its layer’s parameter count (or another scale like Frobenius norm). Sum the normalized losses—this prevents large layers from dominating and ensures fair layer‑wise alignment.
+
+$\mathcal{L}_{\text{LW-Norm}}
+= \sum_{\ell=1}^{L} \frac{1}{|\Theta_\ell|}
+\sum_{\theta \in \Theta_\ell}
+\ell\big( \theta^{(1)}, \theta^{(2)} \big)
+= \sum_{\ell=1}^{L} \frac{1}{|\Theta_\ell|}
+\big\| \boldsymbol{\theta}^{(1)}_\ell - \boldsymbol{\theta}^{(2)}_\ell \big\|_2^2$,
+
+
+        \subsubsection{Jensen-Shannon Loss:}
+
+        Symmetrized, smoothed measure of divergence between two probability distributions.
+
+Treat the flattened weight (or gradient) vectors of the two CNNs as empirical probability distributions (e.g., by applying softmax or histogram binning). The Jensen–Shannon loss computes the square root of the Jensen–Shannon divergence (JSD) between them—a bounded, differentiable metric that captures both global and local distributional mismatches. Use it to align weight spectra, activation histograms, or gradient distributions in a way that is more stable than raw KL divergence.
+
+$\mathcal{L}_{\mathrm{JS}}(\mathbf{p}, \mathbf{q})
+= \sqrt{ \mathrm{JSD}(\mathbf{p} \,\|\, \mathbf{q}) }
+= \sqrt{ \frac{1}{2} D_{\mathrm{KL}}\!\big(\mathbf{p} \,\|\, \mathbf{m}\big)
+       + \frac{1}{2} D_{\mathrm{KL}}\!\big(\mathbf{q} \,\|\, \mathbf{m}\big) },
+\quad \mathbf{m} = \frac{\mathbf{p} + \mathbf{q}}{2}$,
+
+Minimizing this loss encourages the two CNNs to have statistically similar weight or gradient distributions—useful for model matching, ensemble diversity control, or comparing spectral densities in a probabilistic framework.
+        \subsubsection{Fourrier transform difference in Norm:}
+
+Compares global frequency content—sensitive to periodic structure and long-range correlations.
+
+Apply the FFT loss to the flattened 2464‑dimensional weight or gradient vectors of two CNNs. By measuring the mean absolute difference of their discrete Fourier transforms, this loss captures discrepancies in spectral (frequency‑domain) structure—e.g., smoothness, oscillation patterns, or alignment of large‑scale parameter trends. Useful when weight distributions exhibit structured correlations (e.g., across layers or channels) that are invisible in pointwise norms.
+$\mathcal{L}_{\mathrm{FFT}}(\mathbf{w}^{(1)}, \mathbf{w}^{(2)})
+= \frac{1}{N} \sum_{k=0}^{N-1}
+\bigl| \widehat{w}^{(1)}_k - \widehat{w}^{(2)}_k \bigr|,
+\quad
+\widehat{\mathbf{w}} = \mathcal{F}\big(\mathbf{w}\big),
+\quad N = 2464$,
+
+Because the DFT is a unitary linear transform (up to scaling), this loss is equivalent to an ℓ1  norm in the frequency domain and emphasizes differences in global structure rather than local pointwise errors. Minimizing LFFT​  aligns the spectral signatures of the two CNNs—valuable for analyzing topological regularities, enforcing smoothness, or matching weight-space dynamics in frequency.
+        \subsubsection{Mel spectrogram Difference:}
+Compares time–frequency energy patterns—robust to phase, emphasizes perceptually relevant structure.
+
+Treat the flattened 2464‑dimensional weight or gradient vector as a 1‑D “signal” (e.g., layer‑wise concatenated weights). Compute its Mel spectrogram—a smoothed, perceptually motivated time–frequency representation—using a short‑time Fourier transform (STFT) followed by Mel‑scale filterbank integration. Then compute the L² (Frobenius) norm of the difference between the two Mel spectrograms. This loss captures discrepancies in structured spectral energy (e.g., clusters of large/small weights across “time” or layer index), which is more informative than raw FFT or pointwise norms when weight patterns exhibit localized bursts or smooth trends.
+
+$\mathcal{L}_{\mathrm{Mel}}(\mathbf{w}^{(1)}, \mathbf{w}^{(2)})
+= \big\| \mathbf{M}^{(1)} - \mathbf{M}^{(2)} \big\|_F
+= \sqrt{ \sum_{t=1}^{T} \sum_{m=1}^{M}
+\big( M^{(1)}_{t,m} - M^{(2)}_{t,m} \big)^2 }$,
+
+Minimizing LMel​  aligns the energy distribution across scales and positions of the two CNNs’ parameter vectors—useful for comparing topological regularities, enforcing smoothness in weight evolution, or matching spectral “textures” in model distillation or generative weight modeling
+
+        \subsubsection{Mel Spectrogram Frechet inception distance:}
+Compares distributions of time–frequency features via Gaussian‐approximated Fréchet distance—captures both mean and covariance of Mel‑spectral statistics.
+
+Useful Implementation:
+Treat each flattened 2464‑dimensional weight/gradient vector as a 1‑D signal, compute its Mel spectrogram, and then extract a feature vector (e.g., by flattening or using a pretrained encoder). Assuming these features are approximately multivariate Gaussian, the Mel‑Spectrogram Fréchet Inception Distance (MS‑FID) is the Fréchet distance between the two Gaussian distributions estimated from two sets of CNNs (or two models). This provides a single scalar that accounts for both mean shifts (e.g., overall energy differences) and covariance mismatches (e.g., changes in spectral correlation structure)—ideal for evaluating generative models of weights, comparing training trajectories, or assessing layer‑wise spectral similarity.
+
+$\mathrm{MS\text{-}FID}
+= \big\| \boldsymbol{\mu}_1 - \boldsymbol{\mu}_2 \big\|_2^2
++ \mathrm{Tr}\!\big( \mathbf{\Sigma}_1 + \mathbf{\Sigma}_2
+- 2 \big( \mathbf{\Sigma}_1^{1/2} \mathbf{\Sigma}_2 \mathbf{\Sigma}_1^{1/2} \big)^{1/2} \big)$,
+
+Practical notes:
+
+    If only one sample per model is available (e.g., a single weight vector), estimate μ  and Σ  from sub‑segments (e.g., sliding windows over the Mel spectrogram) or use a pretrained spectral encoder to produce multiple patch embeddings.
+    The metric is differentiable if the Mel spectrogram and feature extraction are implemented with differentiable ops (e.g., torchaudio.transforms.MelSpectrogram), enabling use as a training loss.
+
+
+Minimizing MS‑FID encourages two CNNs (or a generator and a target) to produce weight/gradient signals with statistically indistinguishable time–frequency characteristics, making it powerful for spectral model comparison beyond simple L² or MAPE.
+
+
+\subsubsection{Gromov-wasserstein loss:}
+
+
+Compares intrinsic geometry of two distributions—alignment-invariant, structure-aware.
+
+Useful Implementation:**
+Treat the two flattened 2464‑dimensional weight (or gradient) vectors as point clouds X={xi​}i=1N​  and Y={yj​}j=1N​  (with N=2464 ). Instead of comparing values directly (as in Wasserstein), the Gromov–Wasserstein (GW) distance compares the pairwise relational structures—e.g., distances or inner products—within each point cloud. This is ideal when the absolute scale or labeling of parameters differs (e.g., permuted channels or layers), but you care about preserving topological or spectral similarity (e.g., clustering of large/small weights, smoothness patterns). Use GW as a loss to align CNNs up to relabeling or reordering of parameters.
+
+$\mathrm{GW}_p^p(\mu, \nu)
+= \min_{\mathbf{T} \in \Pi(\mu,\nu)}
+\sum_{i,j=1}^{N} \sum_{k,\ell=1}^{N}
+\big| d_X(x_i, x_k) - d_Y(y_j, y_\ell) \big|^p \,
+T_{ij} \, T_{k\ell}$,
+
+In practice, one often uses the entropic-regularized version (Sinkhorn‑Gromov–Wasserstein) for differentiability and efficiency:
+
+$\mathrm{GW}_{p,\varepsilon} =
+\min_{\mathbf{T} \in \Pi(\mu,\nu)}
+\langle \mathbf{L}, \mathbf{T} \otimes \mathbf{T} \rangle
+- \varepsilon H(\mathbf{T})$,
+
+
+with L(i,j),(k,ℓ)​=∣dX​(xi​,xk​)−dY​(yj​,yℓ​)∣p .
+
+Why it matters for CNN weights:
+
+    Invariant to permutation of neurons/channels (no need for explicit matching).
+    Captures global structure: e.g., whether both models have a few large-magnitude weights surrounded by small ones.
+    Suitable for comparing spectral embeddings or topological summaries derived from weight vectors.
+
+
+Minimizing the Gromov–Wasserstein distance aligns the shape of the two weight distributions in a geometrically faithful way—ideal for model comparison, compression, or generative modeling when parameter correspondence is unknown or irrelevant.
+
+\subsubsection{Bottleneck distance loss:}
+Measures similarity of topological features (persistence diagrams) via worst‑case matching cost.
+
+Useful Implementation:
+Compute persistence diagrams (e.g., from sublevel/superlevel filtrations) of the two 2464‑dimensional weight or gradient vectors—treating them as scalar fields over a 1‑D domain (e.g., layer index or parameter index). The bottleneck distance then quantifies the maximum displacement needed to match topological features (connected components, peaks, valleys) between the two diagrams. This captures differences in topological structure (e.g., number and scale of weight clusters, robust extrema) while being robust to small perturbations. Use it as a loss or evaluation metric when comparing CNNs based on their topological signatures.
+
+$d_{\mathrm{B}}(\mathcal{D}_1, \mathcal{D}_2)
+= \inf_{\gamma \in \Gamma(\mathcal{D}_1, \mathcal{D}_2)}
+\sup_{p \in \mathcal{D}_1}
+\| p - \gamma(p) \|_\infty$,
+
+
+Minimizing (or comparing via) the bottleneck distance ensures that the essential topological shape—such as the number and prominence of weight clusters or gradient peaks—is preserved between two CNNs, making it ideal for topological model comparison, pruning analysis, or generative modeling of neural parameters.
+
+\subsubsection{Latent:}
+
+Measures consistency of latent geometry before and after fusion via a shared dense bottleneck.
+
+Explanation of the Loss
+
+You have two parallel encoders (enc1, enc2) that embed inputs (vec1, vec2, output[0], tg) into latent spaces z1​,z2​∈RB×L×D . For each branch:
+
+    Intra-branch alignment:
+        The predictions (z1\_pred, z2\_pred) are pulled toward the target embedding (z1\_tg, z2\_tg) via MSE.
+
+        To normalize this pull, you relativize the prediction loss by the average reconstruction error of the two inputs:
+        Lx1​​+Lx2​​2⋅Lpred​​
+
+        This autoregressive-style term ensures the model only pays a high penalty if it fails to improve over the baseline inputs.
+
+
+    Post-merge consistency:
+        Each target embedding is duplicated, summed, passed through a dense layer (vec2neck), and squashed with tanh to produce a merged bottleneck representation Z1tg​,Z2tg​∈RB×D′ .
+        These are compared to a shared target output[1] (presumably a ground-truth fused code) via MSE: LZ1​,LZ2​ .
+
+
+    Total loss:
+    Ltotal​=(LZ1​+LZ2​)+Lx1​(1)​+Lx2​(1)​2Lpred(1)​​+Lx1​(2)​+Lx2​(2)​2Lpred(2)​​
+
+
+This encourages:
+
+    Each encoder to faithfully encode its input,
+    The prediction (from a combined or intermediate representation) to be closer to the target than the raw inputs,
+    The merged bottleneck to align with a desired fused representation.
+
+
+$\mathcal{L}_{\text{total}}
+= \sum_{k=1}^2 \mathcal{L}^{(k)}_{Z}
++ \sum_{k=1}^2 \frac{2\, \mathcal{L}^{(k)}_{\text{pred}}}
+{\mathcal{L}^{(k)}_{x_1} + \mathcal{L}^{(k)}_{x_2}}$.
+
+Why It’s Useful
+
+    Latent consistency: Ensures that the geometry of embeddings is preserved through the fusion operation.
+    Relative supervision: The ratio term prevents trivial collapse—if inputs already match the target well, the model isn’t forced to overfit the prediction.
+    Dual-branch validation: By enforcing the same target output[1] for both merged branches, you encourage cross-branch agreement in the final representation.
+
+
+This design is well-suited for self-supervised fusion, multi-view learning, or cross-modal alignment where you want to verify that merging latent codes doesn’t distort semantic content.
+
+\subsubsection{multipersistence L2 :}
+
+\clearpage
+
+\section{Appendix:}
+    \subsection{Optimal Transport Primer}
+    \subsection{Persistent Homology Primer}
+    \subsection{Random Matrix Theory:}
+    \subsection{earlier-work results:}
+
+
+
+
+\newpage
+
+
+
+
+
+
+
+
+\end{document}
