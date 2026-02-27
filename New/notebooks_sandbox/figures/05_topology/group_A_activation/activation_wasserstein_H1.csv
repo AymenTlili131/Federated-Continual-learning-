@@ -1,0 +1,7 @@
+,gelu,relu,silu,tanh,sigmoid,leakyrelu
+gelu,0.0,,,,,
+relu,,0.0,,,,
+silu,,,0.0,,,
+tanh,,,,0.0,,
+sigmoid,,,,,0.0,
+leakyrelu,,,,,,0.0
