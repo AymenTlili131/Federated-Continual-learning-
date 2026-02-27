@@ -1,0 +1,6 @@
+,n_neurons,mean_corr,std_corr,max_corr,min_corr,strong_positive,strong_negative,moderate_positive,moderate_negative
+conv1,16.0,,,,,0.0,0.0,0.0,0.0
+conv2,12.0,,,,,0.0,0.0,0.0,0.0
+conv3,8.0,,,,,0.0,0.0,0.0,0.0
+fc1,40.0,,,,,0.0,0.0,0.0,0.0
+fc2,20.0,0.012200080115800671,0.16923441762415908,0.49062618919093953,-0.4951335516739912,0.0,0.0,9.0,7.0

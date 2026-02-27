@@ -71,6 +71,7 @@ GitPython==3.1.45
 greenlet==3.2.4
 gudhi==3.11.0
 h11 @ file:///croot/h11_1748442006460/work
+h5py==3.15.1
 hf-xet==1.1.10
 holoviews==1.20.2
 httpcore @ file:///croot/httpcore_1748526048470/work
@@ -80,6 +81,7 @@ idna @ file:///croot/idna_1714398848350/work
 igraph==0.11.9
 imageio==2.37.0
 importlib_metadata==8.7.0
+importlib_resources==6.5.2
 iniconfig==2.1.0
 ipykernel @ file:///home/task_175758317055216/conda-bld/ipykernel_1757583366251/work
 ipython @ file:///croot/ipython_1734548052611/work
@@ -103,6 +105,7 @@ jupyterlab @ file:///home/task_175812493204303/conda-bld/jupyterlab_175812497951
 jupyterlab_pygments @ file:///croot/jupyterlab_pygments_1741124142640/work
 jupyterlab_server @ file:///croot/jupyterlab_server_1725865349919/work
 jupyterlab_widgets==3.0.15
+kagglehub==0.3.13
 kaleido==1.1.0
 keopscore==2.3
 kiwisolver==1.4.9
@@ -142,6 +145,7 @@ nbconvert @ file:///croot/nbconvert-meta_1741184653315/work
 nbformat @ file:///croot/nbformat_1728049424075/work
 nest-asyncio @ file:///croot/nest-asyncio_1708532673751/work
 networkx==3.3
+nibabel==5.3.3
 notebook_shim @ file:///croot/notebook-shim_1741707758683/work
 numba==0.61.2
 numba-cuda==0.14.1

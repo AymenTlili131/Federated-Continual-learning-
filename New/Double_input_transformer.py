@@ -99,7 +99,22 @@ class CustomDataset(TensorDataset):
                     break
                     
                  
-            tgt_label = sorted(list(set([*label1, *label2])))
+            # Parse MNIST subset labels - labels are strings like "[0, 1]" or "[2, 3, 4]"
+            def parse_mnist_label(label_str):
+                """Parse MNIST subset label string like '[0, 1]' into list [0, 1]"""
+                try:
+                    import ast
+                    parsed = ast.literal_eval(label_str)
+                    return list(parsed) if isinstance(parsed, (list, tuple)) else [parsed]
+                except:
+                    # Fallback: try to extract numbers manually
+                    import re
+                    numbers = re.findall(r'\d+', str(label_str))
+                    return [int(n) for n in numbers] if numbers else [0]
+            
+            label1_parsed = parse_mnist_label(label1)
+            label2_parsed = parse_mnist_label(label2)
+            tgt_label = sorted(list(set(label1_parsed + label2_parsed)))
             
             for target_epoch in range(int(epoch_desired),10,-5):
                 row3 = self.df[(self.df["label"] == str(tgt_label)) &

@@ -2,6 +2,9 @@
 *.bz2
 *.mat
 *.pt
+**/*.pt
+**/*.pth
+**/full_dataframe_correlation_matrix.csv
 Pictures
 New/AE epochinitial original -1.pth
 Old/Somme AE
