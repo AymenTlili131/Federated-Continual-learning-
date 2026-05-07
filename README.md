@@ -12,6 +12,17 @@ MSE.ipynb and wsiayn.ipynb are the notebooks that handle :
 + finetuning on limited size data (20%,10%,5%)(epoch-wise,step-wise precision)
 + create the boxplots for post finetuning analysis on the test set for various loss implementation
 
+
+
+use commands :
+missing_runs_overlap0.sh
+missing_runs_overlap1.sh
+missing_runs_overlap2.sh in notbook sandbox  
+
+and 
+
+cd /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox && for d in $(find experiments/ -maxdepth 1 -type d -newermt "2026-03-20" -name "tiny_overlap2_*" | sort); do [ -f "$d/checkpoints/best_model.pth" ] || continue; name=$(basename "$d"); [ -f "paper_results/deep_analysis/$name/df1_weights.pkl" ] && echo "SKIP $name" && continue; echo "=== $name ===" && /home/aymen/anaconda3/envs/FCL/bin/python3 scripts/checkpoint_deep_analysis.py --exp-dir "$d" --overlap 2 --n-samples 100 --cnn-batch-size 256 --num-workers 6 --resume; done
+
 ----------------
 
 
@@ -24,10 +35,6 @@ MSE.ipynb and wsiayn.ipynb are the notebooks that handle :
     - from our 40 epoch training loop that has an early stopping condition triggered after 10th epoch if the model performance on tha validation set stagnate within a certain margin , we manage to create a varied zoo but due to compute reasons we limit the training on "gelu" activation and the 10th epoch where all class combinations are logged and early stopping counter just started .
     - This guarantees high performance models where it's meaningful to combine their knowledge
 
-the model zoo was trained using files such as Silu.py and target.py . feel free to inspect them 
-
-+ Zoo.csv and Distilled data and loadable npy : [here](https://drive.google.com/drive/folders/1_dOrA9PlHdLpoJHyeWwACRKcF-RLTigp?usp=sharing)
-+ Screenshots used during the making of this proposal : [here](https://drive.google.com/drive/folders/1MSocnYbi-nzVE5GVbNPO-ont64scrvEL?usp=sharing)
-+ Prediction and Finetuning  weights as well as some metrics and distances : [here](https://drive.google.com/drive/folders/16sbcyhWOfVtU1HGpFoOls0RrXxTk4TI0?usp=sharing)
+the model zoo was trained using files such as Silu.py and target.py . feel free to inspect them in /archived or /useful
 
 this repo provides better methods https://github.com/VICO-UoE/DatasetCondensation on advanced datasets than the base dataset distillation method we opted to use because it was already available for MNIST https://github.com/SsnL/dataset-distillation
