@@ -1,0 +1,274 @@
+# Research Pipeline Configuration
+# Weight-Space Hyper-Representation Analysis
+
+# Model Configurations
+models:
+  tiny:
+    d_model: 256
+    nhead: 4
+    num_layers: 2
+    dim_feedforward: 512
+    dropout: 0.1
+    params_M: 4.0
+  
+  small:
+    d_model: 512
+    nhead: 8
+    num_layers: 3
+    dim_feedforward: 1024
+    dropout: 0.1
+    params_M: 8.3
+  
+  medium:
+    d_model: 960
+    nhead: 8
+    num_layers: 4
+    dim_feedforward: 2048
+    dropout: 0.1
+    params_M: 18.1
+  
+  large:
+    d_model: 1536
+    nhead: 12
+    num_layers: 6
+    dim_feedforward: 3072
+    dropout: 0.1
+    params_M: 43.0
+
+# Training Configuration
+training:
+  # Increased from 100 to ensure sufficient convergence
+  num_epochs: 500
+  batch_size: 32
+  learning_rate: 1e-4
+  weight_decay: 1e-5
+  gradient_clip_norm: 1.0
+  
+  # Learning rate schedule
+  lr_scheduler:
+    type: "cosine"  # cosine, step, plateau
+    warmup_epochs: 50
+    min_lr: 1e-6
+  
+  # Early stopping
+  early_stopping:
+    patience: 50
+    min_delta: 1e-5
+  
+  # Validation
+  val_split: 0.15
+  test_split: 0.15
+  # Ensure test set is sufficiently OOD
+  test_ood_criteria:
+    min_class_distance: 2  # Minimum number of different classes
+    max_overlap: 0.3       # Maximum overlap with training classes
+
+# Scenario Configuration
+scenarios:
+  # CNN activations to test
+  activations:
+    - relu
+    - gelu
+    - silu
+    - tanh
+    - leaky_relu
+  
+  # CNN sampling epochs (checkpoints to use)
+  cnn_epochs:
+    - 10
+    - 20
+    - 30
+    - 36
+  
+  # Overlap configurations
+  overlaps:
+    - 0
+    - 1
+    - 2
+
+# Gated Attention Configuration
+gated_attention:
+  enabled: true
+  temperature_init: 1.0
+  gate_hidden_dim_ratio: 0.5  # gate_dim = d_model * ratio
+  entropy_thresholds:
+    warning: 0.5
+    critical: 0.2
+
+# Finetuning Configuration
+finetuning:
+  epochs: [1, 2, 3, 4, 5]
+  learning_rate: 1e-3
+  batch_size: 64
+  # Use union of classes from input models
+  use_union_classes: true
+
+# Visualization Configuration
+visualization:
+  dimensionality_reduction:
+    methods: ['pca', 'tsne', 'umap']
+    n_components: 2
+    sample_every_n_epochs: 5
+  
+  gif_creation:
+    fps: 10
+    dpi: 100
+  
+  exponential_smoothing:
+    alpha_values: [0.1, 0.3, 0.5, 0.7]
+
+# Metrics Configuration
+metrics:
+  # Eigenvalue analysis
+  eigenvalues:
+    compute_per_layer: true
+    track_evolution: true
+    opacity_levels: [0.3, 0.5, 0.7, 1.0]
+  
+  # Persistent Homology
+  persistent_homology:
+    max_dimension: 2
+    max_edge_length: 10.0
+    compute_betti_curves: true
+    compute_persistence_images: true
+  
+  # Random Matrix Theory
+  rmt:
+    batch_analysis: true
+    class_grouped_analysis: true
+    compute_spectral_density: true
+    marchenko_pastur_test: true
+  
+  # Weight comparison
+  weight_metrics:
+    - l2_error
+    - cosine_similarity
+    - wasserstein_distance
+    - rmt_wasserstein
+    - topological_distance
+
+# HMMR Configuration
+hmmr:
+  num_states: [5, 10, 15, 20]
+  max_iter: 100
+  tolerance: 1e-4
+  cluster_subsequences: true
+  min_segment_length: 5
+
+# Weight Disentanglement Configuration
+disentanglement:
+  # Based on https://arxiv.org/pdf/1912.13053
+  enabled: true
+  methods:
+    - "gradient_based"      # Separate by gradient magnitudes
+    - "fisher_information"  # Use Fisher information matrix
+    - "hessian_based"       # Use Hessian eigenvalues
+  
+  # Gradient tracking
+  track_gradients: true
+  gradient_history_length: 100
+  
+  # Oscillation tracking (https://arxiv.org/pdf/2405.20233)
+  track_oscillations: true
+  oscillation_window: 10
+  oscillation_metrics:
+    - frequency
+    - amplitude
+    - phase
+
+# WandB Configuration
+wandb:
+  project: "weight-space-research"
+  entity: ""  # Set via environment variable
+  log_frequency: 10  # Log every N batches
+  
+  # What to log
+  log_items:
+    - gradients
+    - attention_maps
+    - eigenvalues
+    - persistent_homology
+    - weight_distributions
+    - dimensionality_reduction
+    - segmentation_results
+    - disentanglement_metrics
+
+# Data Configuration
+data:
+  # Path to merged zoo
+  merged_zoo_path: "data/Merged zoo.csv"
+  
+  # Preprocessing
+  normalize_weights: true
+  remove_outliers: true
+  outlier_threshold: 3.0  # Standard deviations
+  
+  # Augmentation
+  augmentation:
+    enabled: false
+    noise_std: 0.01
+    rotation_angle: 0.1
+
+# Computational Configuration
+compute:
+  device: "cuda"
+  num_workers: 4
+  pin_memory: true
+  mixed_precision: true  # Use automatic mixed precision
+  
+  # Distributed training
+  distributed:
+    enabled: false
+    backend: "nccl"
+    world_size: 1
+
+# Output Configuration
+output:
+  save_checkpoints_every: 10
+  save_best_only: false
+  save_final_only: false
+  
+  # What to save
+  save_items:
+    - model_checkpoints
+    - predicted_weights
+    - finetuned_weights
+    - smoothed_weights
+    - visualizations
+    - metrics
+    - segmentation_results
+    - disentanglement_results
+
+# Research-Specific Configuration
+research:
+  # Weight importance ranking (https://arxiv.org/pdf/2411.07191)
+  weight_importance:
+    enabled: true
+    methods:
+      - "gradient_magnitude"
+      - "fisher_information"
+      - "taylor_expansion"
+      - "eigenvalue_based"
+    
+    # Clustering criteria
+    clustering:
+      methods: ['kmeans', 'dbscan', 'hierarchical']
+      n_clusters: [5, 10, 15, 20]
+      distance_metrics:
+        - euclidean
+        - cosine
+        - wasserstein
+        - rmt_based
+  
+  # Per-layer analysis
+  per_layer_analysis:
+    enabled: true
+    layers_to_analyze:
+      - conv1
+      - conv2
+      - conv3
+      - fc1
+      - fc2
+    
+    # Apply AUTO loss delimiters per layer
+    use_auto_loss_delimiters: true

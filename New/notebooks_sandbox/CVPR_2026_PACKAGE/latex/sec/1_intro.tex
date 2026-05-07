@@ -1,0 +1,61 @@
+\section{Introduction}
+\label{sec:intro}
+
+Deep neural networks have achieved remarkable success across computer vision tasks, yet our understanding of their internal representations remains limited. While significant progress has been made in analyzing activation spaces~\cite{carlssonTopologicalApproachesDeep2018}, the geometry and topology of \emph{weight spaces}---the high-dimensional manifolds where network parameters reside---remain largely unexplored. Understanding weight space structure is crucial for addressing fundamental questions: Why do different optimization trajectories converge to similar solutions? How do architectural choices affect the loss landscape? Can we predict generalization from weight space geometry?
+
+We introduce \textbf{hyper-representations}, a novel framework that treats neural network weights as data points to be embedded and analyzed. Unlike traditional approaches that study individual networks in isolation, hyper-representations enable comparative analysis across models, architectures, and training regimes. By learning compact embeddings of weight vectors, we can visualize, cluster, and reason about entire populations of neural networks.
+
+Our key insight is that \emph{multiparameter persistent homology}~\cite{carlssonTheoryMultidimensionalPersistence2009} provides a principled mathematical framework for extracting robust topological features from weight space trajectories. Traditional single-parameter persistence tracks how topological features evolve along one filtration (e.g., scale). However, neural network training involves multiple interacting parameters: learning rate, regularization strength, data overlap, and loss function choice. Multiparameter persistence~\cite{botnanBottleneckStabilityRank2024} naturally captures these multi-scale phenomena, revealing topological signatures invisible to conventional analysis.
+
+\subsection{Contributions}
+
+We make the following contributions:
+
+\begin{enumerate}
+    \item \textbf{Hyper-representation framework}: We introduce a transformer-based autoencoder architecture that learns compact, semantically meaningful embeddings of neural network weights, preserving both geometric and topological structure.
+    
+    \item \textbf{Multiparameter persistence analysis}: We apply multiparameter persistent homology to weight space trajectories, revealing how different loss functions induce distinct topological signatures. Our analysis identifies stable topological features that correlate with generalization performance.
+    
+    \item \textbf{Systematic loss function study}: We evaluate 18 diverse loss functions spanning reconstruction losses (MSE, MAE), spectral losses (FFT, MelSpec), optimal transport (Sinkhorn), information-theoretic measures (KL, JS), and topological losses (persistence-based). We demonstrate that regularized combinations exhibit superior stability and generalization.
+    
+    \item \textbf{Statistical and topological insights}: Through comprehensive analysis of 51 trained models across three data overlap scenarios, we establish strong correlations between topological features (effective rank, persistence entropy, Betti numbers) and model performance.
+\end{enumerate}
+
+Our work bridges topological data analysis~\cite{ballesterTopologicalDataAnalysis2024} and deep learning, demonstrating that weight space topology is not merely a theoretical curiosity but a practical tool for understanding and improving neural networks. The hyper-representation framework enables new applications: model selection via topological clustering, transfer learning through weight space interpolation, and architecture search guided by topological constraints.
+
+\subsection{Why Multiple Loss Functions Matter}
+
+The choice of loss function profoundly affects the optimization landscape and learned representations. We systematically study diverse loss families:
+
+\begin{itemize}
+    \item \textbf{Reconstruction losses} (MSE, MAE, MAPE): Establish baseline weight space geometry through direct distance minimization.
+    \item \textbf{Spectral losses} (FFT, MelSpec): Capture frequency-domain structure, revealing periodic patterns in weight evolution.
+    \item \textbf{Optimal transport} (Sinkhorn): Preserve distributional properties, inducing smoother weight space trajectories.
+    \item \textbf{Information-theoretic} (KL, JS): Enforce probabilistic structure, promoting diverse representations.
+    \item \textbf{Geometric losses} (Frobenius, LogNorm): Control weight matrix norms and conditioning.
+    \item \textbf{Topological losses} (Persistence-based): Directly optimize for desired topological features.
+    \item \textbf{Regularized combinations}: Combine complementary losses for improved stability and generalization.
+\end{itemize}
+
+Each loss family explores different regions of weight space, and their regularized combinations create rich, multi-scale optimization landscapes. Our multiparameter persistence analysis reveals that these combinations exhibit more stable topological features than individual losses, explaining their superior generalization~\cite{birdalIntrinsicDimensionPersistent2021}.
+
+The remainder of this paper is organized as follows: Section~\ref{sec:related} reviews related work in topological data analysis and neural network analysis. Section~\ref{sec:method} details our hyper-representation framework and multiparameter persistence methodology. Section~\ref{sec:experiments} describes our experimental setup and loss function taxonomy. Section~\ref{sec:results} presents comprehensive statistical and topological analysis. Section~\ref{sec:conclusion} concludes with implications and future directions.
+
+\subsection{Mathematics}
+
+Please, number all of your sections and displayed equations as in these examples:
+\begin{equation}
+  E = m\cdot c^2
+  \label{eq:important}
+\end{equation}
+and
+\begin{equation}
+  v = a\cdot t.
+  \label{eq:also-important}
+\end{equation}
+It is important for the reader to be able to refer to any particular equation.
+Just because you did not refer to it in the text does not mean that some future reader might not need to refer to it.
+It is cumbersome to have to use circumlocutions like ``the equation second from the top of page 3 column 1''.
+(Note that the ruler will not be present in the final copy, so is not an alternative to equation numbers).
+All authors will benefit from reading Mermin's description of how to write mathematics:
+\url{http://www.pamitc.org/documents/mermin.pdf}.

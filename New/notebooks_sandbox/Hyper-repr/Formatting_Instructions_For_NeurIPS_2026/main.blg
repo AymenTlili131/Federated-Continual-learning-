@@ -1,0 +1,56 @@
+This is BibTeX, Version 0.99d (TeX Live 2025)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: plainnat.bst
+Database file #1: My_Library.bib
+Warning--to sort, need author or key in HyperRepresentationsGenerativeModels2025
+Warning--to sort, need author or key in TopologicalDataAnalysis
+Warning--to sort, need author or key in AvalancheEndtoEndLibrary
+Warning--empty year in AvalancheEndtoEndLibrary
+Warning--empty year in TopologicalDataAnalysis
+Warning--empty year in janv.2022ContinualLearningCourse
+Warning--empty journal in peyreCourseNotesComputational
+Warning--empty year in peyreCourseNotesComputational
+Warning--empty year in peyreCourseNotesComputational
+You've used 37 entries,
+            2773 wiz_defined-function locations,
+            831 strings with 14954 characters,
+and the built_in function-call counts, 17132 in all, are:
+= -- 1415
+> -- 1226
+< -- 12
++ -- 415
+- -- 378
+* -- 1443
+:= -- 2545
+add.period$ -- 95
+call.type$ -- 37
+change.case$ -- 237
+chr.to.int$ -- 37
+cite$ -- 86
+duplicate$ -- 691
+empty$ -- 1352
+format.name$ -- 416
+if$ -- 3592
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 11
+newline$ -- 175
+num.names$ -- 136
+pop$ -- 599
+preamble$ -- 1
+purify$ -- 200
+quote$ -- 0
+skip$ -- 624
+stack$ -- 0
+substring$ -- 331
+swap$ -- 108
+text.length$ -- 5
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 407
+warning$ -- 9
+while$ -- 124
+width$ -- 0
+write$ -- 423
+(There were 9 warnings)

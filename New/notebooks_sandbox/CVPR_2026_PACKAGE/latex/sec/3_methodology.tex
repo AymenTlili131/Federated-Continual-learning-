@@ -1,0 +1,111 @@
+\section{Methodology}
+\label{sec:method}
+
+\subsection{Hyper-Representation Framework}
+
+We formalize hyper-representations as learned embeddings of neural network weight vectors. Let $\mathcal{W} \subset \mathbb{R}^d$ denote the weight space of a neural network architecture with $d$ parameters. Given a population of trained networks $\{w_1, \ldots, w_n\} \subset \mathcal{W}$, we learn an encoder $f: \mathcal{W} \to \mathbb{R}^k$ that maps weights to a low-dimensional embedding space while preserving semantic structure.
+
+\subsubsection{Transformer-Based Autoencoder}
+
+Our architecture consists of:
+\begin{itemize}
+    \item \textbf{Encoder}: Transformer with 6 layers, 8 attention heads, 512-dimensional model, processing weight sequences as patches of 16 parameters (154 patches for 2464-dimensional weights).
+    \item \textbf{Bottleneck}: 128-dimensional latent representation capturing essential weight space structure.
+    \item \textbf{Decoder}: Lightweight 2-layer transformer reconstructing original weights.
+\end{itemize}
+
+The encoder uses multi-head self-attention to capture long-range dependencies in weight sequences:
+\begin{equation}
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+\label{eq:attention}
+\end{equation}
+
+\subsubsection{Training Objective}
+
+We train with a composite loss combining reconstruction and contrastive terms:
+\begin{equation}
+\mathcal{L} = \alpha \mathcal{L}_{\text{recon}} + \beta \mathcal{L}_{\text{contrast}}
+\label{eq:composite_loss}
+\end{equation}
+
+where $\mathcal{L}_{\text{recon}}$ is the reconstruction loss (MSE) and $\mathcal{L}_{\text{contrast}}$ is an InfoNCE contrastive loss encouraging similar networks to have similar embeddings.
+
+\subsection{Multiparameter Persistent Homology}
+
+\subsubsection{Multifiltration Construction}
+
+Neural network training naturally defines a multifiltration indexed by multiple parameters. We consider:
+\begin{itemize}
+    \item \textbf{Scale parameter} $s$: Rips filtration parameter controlling neighborhood size
+    \item \textbf{Training epoch} $t$: Temporal evolution of weight space
+    \item \textbf{Loss magnitude} $\ell$: Sublevel sets of loss landscape
+    \item \textbf{Data overlap} $o \in \{0, 1, 2\}$: Degree of training data sharing
+\end{itemize}
+
+For a weight space point cloud $W = \{w_1, \ldots, w_n\}$, we construct a bifiltration:
+\begin{equation}
+\mathcal{F}_{s,t}(W) = \text{Rips}(W_{\leq t}, s)
+\label{eq:bifiltration}
+\end{equation}
+
+where $W_{\leq t}$ contains weights from epochs $\leq t$ and $\text{Rips}(W, s)$ is the Vietoris-Rips complex at scale $s$.
+
+\subsubsection{Persistence Module Decomposition}
+
+The multiparameter persistence module $H_*(\mathcal{F}_{s,t})$ does not admit a complete discrete invariant. Instead, we compute:
+\begin{itemize}
+    \item \textbf{Rank invariant}: $\text{rank}(H_p(\mathcal{F}_{s,t}) \to H_p(\mathcal{F}_{s',t'}))$ for $s \leq s'$, $t \leq t'$
+    \item \textbf{Hilbert function}: $\dim H_p(\mathcal{F}_{s,t})$ as a function of $(s,t)$
+    \item \textbf{Signed barcodes}: Decomposition into interval modules with multiplicities
+\end{itemize}
+
+\subsubsection{Topological Features}
+
+From persistence diagrams, we extract:
+\begin{itemize}
+    \item \textbf{Betti numbers} $\beta_p$: Count of $p$-dimensional holes
+    \item \textbf{Persistence entropy}: $E = -\sum_i p_i \log p_i$ where $p_i = \ell_i / \sum_j \ell_j$ and $\ell_i$ is persistence
+    \item \textbf{Effective rank}: $r_{\text{eff}} = \exp(E)$
+    \item \textbf{Total persistence}: $\sum_i \ell_i$
+    \item \textbf{Max persistence}: $\max_i \ell_i$
+\end{itemize}
+
+\subsection{Loss Function Taxonomy}
+
+We systematically evaluate 18 loss functions organized into hierarchical levels:
+
+\textbf{Level 1 - Individual Losses (13):}
+\begin{itemize}
+    \item Reconstruction: MSE, MAE, MAPE, Quantile
+    \item Spectral: FFT, MelSpec
+    \item Optimal Transport: Sinkhorn
+    \item Information-Theoretic: KL, JS
+    \item Geometric: Frobenius, LogNorm, FIM
+    \item Autoregressive: AUTO
+\end{itemize}
+
+\textbf{Level 2 - Layerwise Versions (13):}
+Apply losses separately to each layer, respecting architectural boundaries at positions [208, 1414, 1514, 2254, 2464].
+
+\textbf{Level 3 - Regularized Combinations:}
+Combine complementary losses with small regularization weights:
+\begin{equation}
+\mathcal{L}_{\text{reg}} = \mathcal{L}_{\text{main}} + \lambda \mathcal{L}_{\text{reg}}
+\label{eq:regularized}
+\end{equation}
+
+Examples: MSE+0.05×Frobenius, FFT+0.1×MelSpec, Sinkhorn+0.15×KL.
+
+Each loss induces a different optimization trajectory in weight space, creating diverse topological signatures that we analyze via multiparameter persistence.
+
+\subsection{Statistical Analysis}
+
+We compute correlation matrices between:
+\begin{itemize}
+    \item Training metrics: final/best train loss, final/best val loss
+    \item Performance metrics: CNN accuracy, total epochs
+    \item Topological features: Betti numbers, persistence entropy, effective rank
+    \item Statistical moments: mean, std, skewness, kurtosis of weights
+\end{itemize}
+
+Correlation analysis reveals which topological features predict generalization, guiding loss function selection and architecture design.

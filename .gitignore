@@ -2,6 +2,7 @@
 *.bz2
 *.mat
 *.pt
+*.pyc
 **/*.pt
 **/*.pth
 **/full_dataframe_correlation_matrix.csv
@@ -26,3 +27,9 @@ New/wandb/
 Old/
 *.ipynb_checkpoints
 *.npy
+**/wandb/*
+**/*.png
+**/*.json
+*.pkl
+*.csv
+experiment_logs/

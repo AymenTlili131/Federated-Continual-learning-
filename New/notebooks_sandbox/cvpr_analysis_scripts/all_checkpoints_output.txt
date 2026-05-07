@@ -1,0 +1,236 @@
+Using device: cpu
+
+================================================================================
+COMPLETE ANALYSIS: ALL 54 CHECKPOINTS
+================================================================================
+
+1. Loading test data (Ground Truth CNN weights)...
+   Zoo: 36468 samples, 2464 dimensions
+
+2. Finding ALL tiny model checkpoints...
+   Found 54 checkpoints
+
+3. Processing ALL checkpoints for inference...
+Processing checkpoints:   0%|          | 0/54 [00:00<?, ?it/s]Processing checkpoints:   2%|▏         | 1/54 [00:00<00:30,  1.71it/s]Processing checkpoints:   4%|▎         | 2/54 [00:00<00:17,  2.94it/s]Processing checkpoints:   7%|▋         | 4/54 [00:00<00:08,  5.62it/s]Processing checkpoints:   9%|▉         | 5/54 [00:01<00:08,  6.07it/s]Processing checkpoints:  13%|█▎        | 7/54 [00:01<00:05,  8.01it/s]Processing checkpoints:  17%|█▋        | 9/54 [00:01<00:04,  9.45it/s]Processing checkpoints:  20%|██        | 11/54 [00:01<00:04,  8.72it/s]Processing checkpoints:  22%|██▏       | 12/54 [00:01<00:05,  7.05it/s]Processing checkpoints:  24%|██▍       | 13/54 [00:02<00:06,  6.77it/s]Processing checkpoints:  26%|██▌       | 14/54 [00:02<00:06,  5.99it/s]Processing checkpoints:  28%|██▊       | 15/54 [00:02<00:06,  6.06it/s]Processing checkpoints:  30%|██▉       | 16/54 [00:02<00:06,  5.93it/s]Processing checkpoints:  31%|███▏      | 17/54 [00:02<00:06,  5.82it/s]Processing checkpoints:  33%|███▎      | 18/54 [00:02<00:06,  5.88it/s]Processing checkpoints:  35%|███▌      | 19/54 [00:03<00:07,  4.79it/s]Processing checkpoints:  37%|███▋      | 20/54 [00:03<00:09,  3.77it/s]Processing checkpoints:  39%|███▉      | 21/54 [00:03<00:08,  4.06it/s]Processing checkpoints:  41%|████      | 22/54 [00:04<00:09,  3.22it/s]Processing checkpoints:  43%|████▎     | 23/54 [00:04<00:08,  3.69it/s]Processing checkpoints:  44%|████▍     | 24/54 [00:04<00:07,  4.06it/s]Processing checkpoints:  46%|████▋     | 25/54 [00:04<00:07,  4.01it/s]Processing checkpoints:  48%|████▊     | 26/54 [00:05<00:06,  4.44it/s]Processing checkpoints:  50%|█████     | 27/54 [00:05<00:05,  4.61it/s]Processing checkpoints:  52%|█████▏    | 28/54 [00:05<00:05,  5.03it/s]Processing checkpoints:  54%|█████▎    | 29/54 [00:05<00:06,  3.98it/s]Processing checkpoints:  56%|█████▌    | 30/54 [00:06<00:06,  3.61it/s]Processing checkpoints:  57%|█████▋    | 31/54 [00:06<00:06,  3.73it/s]Processing checkpoints:  59%|█████▉    | 32/54 [00:06<00:05,  4.29it/s]Processing checkpoints:  61%|██████    | 33/54 [00:06<00:04,  4.58it/s]Processing checkpoints:  63%|██████▎   | 34/54 [00:06<00:03,  5.04it/s]Processing checkpoints:  65%|██████▍   | 35/54 [00:07<00:03,  5.38it/s]Processing checkpoints:  67%|██████▋   | 36/54 [00:07<00:03,  5.87it/s]Processing checkpoints:  69%|██████▊   | 37/54 [00:07<00:02,  6.19it/s]Processing checkpoints:  70%|███████   | 38/54 [00:07<00:03,  5.18it/s]Processing checkpoints:  72%|███████▏  | 39/54 [00:07<00:03,  4.66it/s]Processing checkpoints:  74%|███████▍  | 40/54 [00:08<00:03,  4.51it/s]Processing checkpoints:  76%|███████▌  | 41/54 [00:08<00:03,  4.23it/s]Processing checkpoints:  78%|███████▊  | 42/54 [00:08<00:02,  5.11it/s]Processing checkpoints:  80%|███████▉  | 43/54 [00:08<00:01,  5.62it/s]Processing checkpoints:  81%|████████▏ | 44/54 [00:08<00:01,  5.24it/s]encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+Processing checkpoints:  83%|████████▎ | 45/54 [00:09<00:01,  4.91it/s]Processing checkpoints:  85%|████████▌ | 46/54 [00:09<00:01,  5.09it/s]Processing checkpoints:  87%|████████▋ | 47/54 [00:09<00:01,  4.96it/s]Processing checkpoints:  89%|████████▉ | 48/54 [00:09<00:01,  4.93it/s]Processing checkpoints:  91%|█████████ | 49/54 [00:09<00:01,  4.70it/s]Processing checkpoints:  93%|█████████▎| 50/54 [00:10<00:00,  4.73it/s]Processing checkpoints:  94%|█████████▍| 51/54 [00:10<00:00,  4.70it/s]Processing checkpoints:  96%|█████████▋| 52/54 [00:10<00:00,  4.67it/s]Processing checkpoints:  98%|█████████▊| 53/54 [00:10<00:00,  4.95it/s]Processing checkpoints: 100%|██████████| 54/54 [00:10<00:00,  4.80it/s]Processing checkpoints: 100%|██████████| 54/54 [00:10<00:00,  4.93it/s]
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+     ERROR: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!
+Traceback (most recent call last):
+  File "/home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/cvpr_analysis_scripts/22_all_checkpoints_complete.py", line 183, in <module>
+    gt_weights = np.vstack(all_gt)
+  File "/home/aymen/anaconda3/envs/FCL/lib/python3.10/site-packages/numpy/core/shape_base.py", line 289, in vstack
+    return _nx.concatenate(arrs, 0, dtype=dtype, casting=casting)
+ValueError: need at least one array to concatenate

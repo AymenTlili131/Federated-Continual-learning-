@@ -1,0 +1,28 @@
+\section{Related Work}
+\label{sec:related}
+
+\subsection{Topological Data Analysis for Neural Networks}
+
+Topological data analysis (TDA) has emerged as a powerful framework for understanding neural network behavior. Carlsson and Gabrielsson~\cite{carlssonTopologicalApproachesDeep2018} pioneered the application of persistent homology to deep learning, demonstrating that topological features of activation spaces correlate with network performance. Ballester \etal~\cite{ballesterTopologicalDataAnalysis2024} provide a comprehensive survey of TDA methods for neural network analysis, covering applications from architecture design to interpretability.
+
+Recent work has focused on using persistence diagrams to analyze network stability~\cite{akaiExperimentalStabilityAnalysis2021} and generalization~\cite{birdalIntrinsicDimensionPersistent2021}. Birdal \etal show that intrinsic dimension and persistent homology jointly predict generalization, establishing a theoretical connection between topology and learning dynamics. Our work extends these insights to weight space, where topological structure directly reflects optimization trajectories.
+
+\subsection{Multiparameter Persistent Homology}
+
+Classical persistent homology tracks topological features along a single filtration parameter. Carlsson and Zomorodian~\cite{carlssonTheoryMultidimensionalPersistence2009} introduced the theory of multidimensional persistence, showing that no complete discrete invariant exists for multifiltrations. Despite this theoretical limitation, recent advances have made multiparameter persistence practical. Botnan \etal~\cite{botnanBottleneckStabilityRank2024} establish bottleneck stability for rank decompositions, providing theoretical foundations for robust multiparameter analysis.
+
+Carrière and Blumberg~\cite{carriereMultiparameterPersistenceImages} introduce multiparameter persistence images for machine learning, demonstrating that vectorized representations enable statistical analysis while preserving topological information. We build on this work, applying multiparameter persistence to neural network weight spaces where multiple training parameters naturally define a multifiltration.
+
+\subsection{Neural Network Weight Space Analysis}
+
+Understanding weight space geometry is crucial for optimization and generalization. The Neural Tangent Kernel (NTK) framework~\cite{adlamNeuralTangentKernel2020} provides theoretical insights into training dynamics in the infinite-width limit. However, practical networks exhibit rich finite-width phenomena that NTK theory cannot capture.
+
+Recent work on representation topology~\cite{barannikovRepresentationTopologyDivergence2022} introduces divergence measures based on topological features, enabling comparison of learned representations. Our hyper-representation framework extends this idea to weight spaces, treating entire networks as points in a learned embedding space.
+
+\subsection{Loss Function Design}
+
+Loss function choice profoundly affects optimization landscapes and learned representations. Beyond standard reconstruction losses, recent work explores spectral losses for frequency-aware training, optimal transport losses for distributional matching~\cite{230909442UseKantorovichRubinstein2025}, and information-theoretic objectives for representation learning. Our systematic study of 18 loss functions reveals how different objectives shape weight space topology, with regularized combinations exhibiting superior stability.
+
+\subsection{Distributed Computation of Persistence}
+
+Computing persistent homology for large-scale neural networks requires efficient algorithms. Bauer \etal~\cite{bauerDistributedComputationPersistent2013} introduce distributed methods for persistence computation, enabling analysis of high-dimensional datasets. We leverage these techniques to analyze weight spaces with thousands of dimensions, computing multiparameter persistence diagrams for entire training trajectories.

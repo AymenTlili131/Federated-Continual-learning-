@@ -1,0 +1,256 @@
+✓ GUDHI available
+✓ Multipers available (v2.3.4)
+Using device: cuda
+
+================================================================================
+COMPLETE PIPELINE: CHECKPOINT LOADING + INFERENCE + TOPOLOGY
+================================================================================
+
+================================================================================
+STEP 1: Loading Test Data (Ground Truth CNN Weights)
+================================================================================
+
+Loading from: /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/data/Merged zoo.csv
+Total samples: 36468
+Weight dimensions: 2464
+Test set size: (300, 2464)
+
+================================================================================
+STEP 2: Finding and Loading Tiny Model Checkpoints
+================================================================================
+Found 54 tiny model checkpoints
+  - tiny_overlap0_AUTO
+  - tiny_overlap0_CosineLoss
+  - tiny_overlap0_FFT
+  - tiny_overlap0_FFT_0.1xMelSpec
+  - tiny_overlap0_Huber
+
+================================================================================
+STEP 3: Loading Checkpoints and Running Inference
+================================================================================
+Processing checkpoints:   0%|          | 0/10 [00:00<?, ?it/s]Processing checkpoints:  10%|█         | 1/10 [00:00<00:02,  3.28it/s]Processing checkpoints:  20%|██        | 2/10 [00:00<00:01,  4.59it/s]Processing checkpoints:  30%|███       | 3/10 [00:00<00:01,  4.67it/s]Processing checkpoints:  40%|████      | 4/10 [00:00<00:01,  4.57it/s]Processing checkpoints:  50%|█████     | 5/10 [00:01<00:01,  4.76it/s]Processing checkpoints:  60%|██████    | 6/10 [00:01<00:00,  5.01it/s]Processing checkpoints:  70%|███████   | 7/10 [00:01<00:00,  5.13it/s]Processing checkpoints:  80%|████████  | 8/10 [00:01<00:00,  4.77it/s]Processing checkpoints:  90%|█████████ | 9/10 [00:02<00:00,  2.91it/s]Processing checkpoints: 100%|██████████| 10/10 [00:02<00:00,  3.38it/s]Processing checkpoints: 100%|██████████| 10/10 [00:02<00:00,  3.96it/s]
+
+Processing: tiny_overlap0_AUTO
+  Config: N=1, heads=2, d_model=32, neck=16
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+  Model loaded: 4,017,680 parameters
+  ✓ Success: (30, 2464)
+
+Processing: tiny_overlap0_CosineLoss
+  Config: N=1, heads=2, d_model=32, neck=16
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+  Model loaded: 4,017,680 parameters
+  ✓ Success: (30, 2464)
+
+Processing: tiny_overlap0_FFT
+  Config: N=1, heads=2, d_model=32, neck=16
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+  Model loaded: 4,017,680 parameters
+  ✓ Success: (30, 2464)
+
+Processing: tiny_overlap0_FFT_0.1xMelSpec
+  Config: N=1, heads=2, d_model=32, neck=16
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+  Model loaded: 4,017,680 parameters
+  ✓ Success: (30, 2464)
+
+Processing: tiny_overlap0_Huber
+  Config: N=1, heads=2, d_model=32, neck=16
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+  Model loaded: 4,017,680 parameters
+  ✓ Success: (30, 2464)
+
+Processing: tiny_overlap0_LWLN
+  Config: N=1, heads=2, d_model=32, neck=16
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+  Model loaded: 4,017,680 parameters
+  ✓ Success: (30, 2464)
+
+Processing: tiny_overlap0_LW_MAE
+  Config: N=1, heads=2, d_model=32, neck=16
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+  Model loaded: 4,017,680 parameters
+  ✓ Success: (30, 2464)
+
+Processing: tiny_overlap0_LW_MAPE
+  Config: N=1, heads=2, d_model=32, neck=16
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+  Model loaded: 4,017,680 parameters
+  ✓ Success: (30, 2464)
+
+Processing: tiny_overlap0_LW_MAPE_0.1xLW_JS
+  Config: N=1, heads=2, d_model=32, neck=16
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+  Model loaded: 4,017,680 parameters
+  ✓ Success: (30, 2464)
+
+Processing: tiny_overlap0_LW_MSE
+  Config: N=1, heads=2, d_model=32, neck=16
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+  Model loaded: 4,017,680 parameters
+  ✓ Success: (30, 2464)
+
+================================================================================
+INFERENCE COMPLETE
+================================================================================
+Total GT samples: (300, 2464)
+Total PD samples: (300, 2464)
+Experiments: 10
+
+================================================================================
+STEP 4: Generating/Loading Finetuned CNN Weights
+================================================================================
+Simulating FN weights (GT + task-specific perturbation)
+Simulated FN weights: (300, 2464)
+
+================================================================================
+STEP 5: Statistical Analysis (Mean, Std, Skewness, Kurtosis)
+================================================================================
+
+GT Statistics:
+  Mean: -0.0043, Std: 0.4080
+  Skewness: -0.7833, Kurtosis: 11.4186
+  L2 Norm: 17.98
+
+PD Statistics:
+  Mean: 0.0009, Std: 0.2036
+  Skewness: 0.7986, Kurtosis: 61.1353
+  L2 Norm: 4.49
+
+FN Statistics:
+  Mean: -0.0043, Std: 0.4085
+  Skewness: -0.7812, Kurtosis: 11.3689
+  L2 Norm: 18.01
+
+✓ Saved: cnn_weights_statistics.csv
+
+================================================================================
+STEP 6: Spectral Analysis (FFT, Power Spectrum, Spectral Centroid)
+================================================================================
+
+GT Spectral Features:
+  Spectral Centroid: 1231.16 ± 0.53
+  Spectral Flatness: 0.8387
+
+PD Spectral Features:
+  Spectral Centroid: 1231.91 ± 0.07
+  Spectral Flatness: 0.8302
+
+FN Spectral Features:
+  Spectral Centroid: 1231.16 ± 0.53
+  Spectral Flatness: 0.8385
+
+✓ Saved: cnn_weights_spectral.csv
+
+================================================================================
+STEP 7: Topological Analysis - Normal Persistence (GUDHI)
+================================================================================
+
+Computing topology for GT...
+  Computing Rips complex for 100 points...
+  Computing persistence...
+  β₀=1, β₁=0, β₂=0
+  Entropy(H₁): 1.934
+  Total Pers(H₁): 0.685
+  H₁ Features: 9
+
+Computing topology for PD...
+  Computing Rips complex for 100 points...
+  Computing persistence...
+  β₀=1, β₁=0, β₂=0
+  Entropy(H₁): 0.000
+  Total Pers(H₁): 0.000
+  H₁ Features: 0
+
+Computing topology for FN...
+  Computing Rips complex for 100 points...
+  Computing persistence...
+  β₀=1, β₁=0, β₂=0
+  Entropy(H₁): 2.464
+  Total Pers(H₁): 1.425
+  H₁ Features: 15
+
+✓ Saved: cnn_weights_topology_gudhi.csv
+
+================================================================================
+STEP 8: Multiparameter Persistence (Multipers)
+================================================================================
+
+Computing multiparameter persistence for GT...
+  Error in multipers: 'multipers.simplex_tree_multi.SimplexTreeMulti_Ff64' object has no attribute 'compute_persistence'
+
+Computing multiparameter persistence for PD...
+  Error in multipers: 'multipers.simplex_tree_multi.SimplexTreeMulti_Ff64' object has no attribute 'compute_persistence'
+
+Computing multiparameter persistence for FN...
+  Error in multipers: 'multipers.simplex_tree_multi.SimplexTreeMulti_Ff64' object has no attribute 'compute_persistence'
+
+================================================================================
+STEP 9: Generating Visualizations
+================================================================================
+✓ Saved: cnn_weights_statistics.png
+✓ Saved: cnn_weights_topology_betti.png
+✓ Saved: cnn_weights_topology_persistence.png
+✓ Saved: cnn_weights_spectral.png
+
+================================================================================
+STEP 10: Summary and Results
+================================================================================
+
+📊 STATISTICAL ANALYSIS:
+type      mean      std  skewness  kurtosis   l2_norm
+  GT -0.004347 0.408022 -0.783299 11.418585 17.980396
+  PD  0.000931 0.203648  0.798586 61.135271  4.490072
+  FN -0.004313 0.408523 -0.781227 11.368862 18.012517
+
+📐 TOPOLOGICAL ANALYSIS:
+type  betti_0  betti_1  betti_2  entropy_h1  total_pers_h1  n_features_h1
+  GT        1        0        0    1.933588       0.684901              9
+  PD        1        0        0    0.000000       0.000000              0
+  FN        1        0        0    2.464171       1.424864             15
+
+🎵 SPECTRAL ANALYSIS:
+type  spectral_centroid_mean  spectral_flatness_mean
+  GT             1231.159322                0.838672
+  PD             1231.909276                0.830196
+  FN             1231.163862                0.838541
+
+================================================================================
+ALL RESULTS SAVED:
+================================================================================
+
+Data files:
+  - /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/cvpr_analysis_scripts/data/cnn_weights_statistics.csv
+  - /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/cvpr_analysis_scripts/data/cnn_weights_spectral.csv
+  - /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/cvpr_analysis_scripts/data/cnn_weights_topology_gudhi.csv
+  - /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/cvpr_analysis_scripts/data/cnn_weights_topology_multipers.json
+
+Figures:
+  - /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/CVPR 2026/figures/cnn_weights_statistics.png
+  - /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/CVPR 2026/figures/cnn_weights_spectral.png
+  - /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/CVPR 2026/figures/cnn_weights_topology_betti.png
+  - /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/CVPR 2026/figures/cnn_weights_topology_persistence.png
+
+================================================================================
+PIPELINE COMPLETE!
+================================================================================

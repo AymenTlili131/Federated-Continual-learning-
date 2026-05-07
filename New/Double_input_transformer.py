@@ -49,111 +49,34 @@ def batchify(lst, batch_size, batch_limit=100):
     return batches[:batch_limit]
 
 class CustomDataset(TensorDataset):
-    def __init__(self, L_exp, batch_size=20,batch_limit=5, df_path="./data/Merged zoo.csv"):
-        self.df_path = df_path
-        self.df = pd.read_csv(df_path)
-        self.L_exp = L_exp
-        self.batch_limit=batch_limit
-        self.batch_size=batch_size
-        self.params_cols = list(self.df.columns[17:-2])
-        
-        
-
-        self.batchs = batchify(self.L_exp, self.batch_size,self.batch_limit)
-
-        self.D_epoch = {'0': '11', '1': '16', '2': '21', '3': '26', '4': '31', '5': '36'}
+    def __init__(self, m, epoch_key, activ_key, batch_size=20, batch_limit=5, df_path="./data/Merged zoo.csv", data_type="train"):
+        self.m = m  # Overlap value
+        self.epoch_key = epoch_key
+        self.activ_key = activ_key
+        self.batch_size = batch_size
+        self.batch_limit = batch_limit
+        self.data_type = data_type  # 'train', 'val', or 'test'
         self.D_activ = {'0': "gelu", '1': "relu", '2': "silu", '3': "leakyrelu", '4': "sigmoid", '5': "tanh"}
-    
+        activ_str = self.D_activ[str(activ_key)]
+        results_path = f"./data/Scenario/overlapping_m{m}_epoch{epoch_key}_activ{activ_key}/{data_type}_batches.pt"
+        
+        # Load pre-saved batch data
+        data = torch.load(results_path)
+        self.loaded_list = data["loaded_list"]  # List of stacked tensors [Stream1, Stream2, target]
+        self.L_ACC_list = data["L_ACC_list"]    # List of accuracy metadata
+        self.L_indexes_list = data["L_indexes_list"]  # List of indexes metadata
+        
+        # Batchify if necessary, but since batches are pre-saved, use existing structure
+        self.batches = self.loaded_list  # Assume loaded_list is already a list of batches
+        
     def __len__(self):
-        return len(self.batchs)
-    
+        return len(self.batches)
+        
     def __getitem__(self, idx):
-        batch = self.batchs[idx]
-        L_Stream1, L_Stream2, tgt = [], [], []
-        L_ACC, L_indexes = [], []
-        
-        
-        for c in range(len(batch)):
-            label1, label2, epoch_key, activ_key = batch[c]
-            epoch_desired = self.D_epoch[str(epoch_key)]
-            activation = self.D_activ[str(activ_key)]
-            
-            for target_epoch in range(int(epoch_desired),10,-5):
-                #print(target_epoch)
-                #print(type(self.df[["epoch"]]),self.df["epoch"] == int(target_epoch))
-                row1 = self.df[(self.df["label"] == str(label1)) &
-                               (self.df["epoch"] == int(target_epoch)) &
-                               (self.df[activation] == 1.0)]
-                self.row1=row1
-                #print(((~row1.all(axis=1)).sum()) ==0 )
-                if len(row1) ==1 :
-                    break
-                
-
-            for target_epoch in range(int(epoch_desired),10,-5):
-                row2 = self.df[(self.df["label"] == str(label2)) &
-                               (self.df["epoch"] == int(target_epoch)) &
-                               (self.df[activation] == 1.0)]
-                #print(((~row2.all(axis=1)).sum()) ==0 )
-                if len(row2) ==1 :
-                    break
-                    
-                 
-            # Parse MNIST subset labels - labels are strings like "[0, 1]" or "[2, 3, 4]"
-            def parse_mnist_label(label_str):
-                """Parse MNIST subset label string like '[0, 1]' into list [0, 1]"""
-                try:
-                    import ast
-                    parsed = ast.literal_eval(label_str)
-                    return list(parsed) if isinstance(parsed, (list, tuple)) else [parsed]
-                except:
-                    # Fallback: try to extract numbers manually
-                    import re
-                    numbers = re.findall(r'\d+', str(label_str))
-                    return [int(n) for n in numbers] if numbers else [0]
-            
-            label1_parsed = parse_mnist_label(label1)
-            label2_parsed = parse_mnist_label(label2)
-            tgt_label = sorted(list(set(label1_parsed + label2_parsed)))
-            
-            for target_epoch in range(int(epoch_desired),10,-5):
-                row3 = self.df[(self.df["label"] == str(tgt_label)) &
-                               (self.df["epoch"] == int(target_epoch)) &
-                               (self.df[activation] == 1.0)]
-                #print(((~row3.all(axis=1)).sum()) ==0 )
-                if len(row3) ==1 :
-                    break
-               
-                
-            
-            
-            L_Stream1.append(torch.tensor(row1[self.params_cols].values, dtype=torch.float32))
-            ind1 = row1.index[0]
-            ACC1 = self.df.loc[ind1, "Accuracy"]
-
-            L_Stream2.append(torch.tensor(row2[self.params_cols].values, dtype=torch.float32))
-            ind2 = row2.index[0]
-            ACC2 = self.df.loc[ind2, "Accuracy"]
-
-            ind3 = row3.index[0]
-            tgt.append(torch.tensor(row3[self.params_cols].values, dtype=torch.float32))
-            ACC3 = row3["Accuracy"].values[0]
-                
-            L_ACC.append([ACC1, ACC2, ACC3])
-            L_indexes.append([ind1, ind2, ind3])
-
-            
-
-        
-        Stream1 = torch.stack(L_Stream1).squeeze()
-        Stream2 = torch.stack(L_Stream2).squeeze()
-        target = torch.stack(tgt).squeeze()
-        loaded = torch.stack([Stream1, Stream2, target], dim=1)
-        
-        
-        
-        return loaded, batch, L_ACC, L_indexes
-    
+        loaded_batch = self.batches[idx]
+        acc_batch = self.L_ACC_list[idx]
+        indexes_batch = self.L_indexes_list[idx]
+        return loaded_batch, acc_batch, indexes_batch
     
     
     
@@ -420,7 +343,7 @@ class TransformerAE(nn.Module):
         self.enc2 = EncoderNeuronGroup(d_model=self.d_model, N=self.N, heads=self.heads, max_seq_len=self.max_seq_len, dropout=self.dropout,d_ff=self.d_ff)
         self.dec = DecoderNeuronGroup(d_model=self.d_model, N=self.N, heads=self.heads, max_seq_len=self.max_seq_len, dropout=self.dropout,d_ff=self.d_ff,neck=self.neck)
         #print("Addition Approach!")
-        self.vec2neck = nn.Linear(self.d_ff*2, self.neck)
+        self.vec2neck = nn.Linear(self.d_model*2, self.neck)  # Fixed: concatenated encoders output d_model*2, not d_ff*2
         #print("Stack Approach!")
         #self.vec2neck = nn.Linear(2*self.d_ff * self.max_seq_len, self.neck)
         self.tanh = nn.Tanh()

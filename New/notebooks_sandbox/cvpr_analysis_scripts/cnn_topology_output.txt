@@ -1,0 +1,71 @@
+✓ GUDHI available
+✓ Multipers available (v2.3.4)
+Using device: cuda
+
+================================================================================
+CNN WEIGHTS TOPOLOGICAL ANALYSIS
+Ground Truth, Predicted, and Finetuned CNN Weights
+================================================================================
+
+1. Finding tracking data files...
+Found 0 tracking files
+
+2. Loading CNN weights from tracking data...
+   Format: columns are 'weight 0', 'weight 1', ..., 'weight 2463' for each type
+Loading tracking data: 0it [00:00, ?it/s]Loading tracking data: 0it [00:00, ?it/s]
+
+Loaded CNN weights:
+  Ground Truth: (0,)
+  Predicted: (0,)
+  Finetuned: (0,)
+
+================================================================================
+4. NORMAL PERSISTENT HOMOLOGY ANALYSIS (GUDHI)
+================================================================================
+
+Computing normal persistence for GT weights...
+  β₀=0, β₁=0, β₂=0
+  Entropy(H₁)=0.000, Total Pers(H₁)=0.000
+
+Computing normal persistence for PD weights...
+  β₀=0, β₁=0, β₂=0
+  Entropy(H₁)=0.000, Total Pers(H₁)=0.000
+
+Computing normal persistence for FN weights...
+  β₀=0, β₁=0, β₂=0
+  Entropy(H₁)=0.000, Total Pers(H₁)=0.000
+
+✓ Saved normal persistence results
+
+================================================================================
+5. MULTIPARAMETER PERSISTENT HOMOLOGY ANALYSIS (Multipers)
+================================================================================
+
+Computing multiparameter persistence for GT weights...
+  Error: axis 1 is out of bounds for array of dimension 1
+
+Computing multiparameter persistence for PD weights...
+  Error: axis 1 is out of bounds for array of dimension 1
+
+Computing multiparameter persistence for FN weights...
+  Error: axis 1 is out of bounds for array of dimension 1
+
+✓ Saved multiparameter persistence results
+
+================================================================================
+6. GENERATING VISUALIZATIONS
+================================================================================
+✓ Saved: cnn_weights_betti_numbers_comparison.png
+✓ Saved: cnn_weights_persistence_comparison.png
+
+================================================================================
+ANALYSIS COMPLETE
+================================================================================
+
+Results saved to:
+  - /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/cvpr_analysis_scripts/data/cnn_weights_normal_persistence.csv
+  - /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/cvpr_analysis_scripts/data/cnn_weights_multiparameter_persistence.json
+
+Figures saved to:
+  - /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/CVPR 2026/figures/cnn_weights_betti_numbers_comparison.png
+  - /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/CVPR 2026/figures/cnn_weights_persistence_comparison.png

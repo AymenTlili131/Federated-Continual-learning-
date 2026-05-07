@@ -1,0 +1,107 @@
+\section{Methodology}
+\label{sec:method}
+
+\subsection{Problem Formulation: Weight-Space Prediction for FCL}
+
+Let $\mathcal{W} = \mathbb{R}^d$ be the weight space of a CNN architecture ($d = 2{,}464$). For task subsets $\tau_1, \tau_2 \subset \mathcal{T}$ (MNIST classes), let $w_\tau \in \mathcal{W}$ denote the weights of a CNN trained to convergence on $\tau$. Our goal is to learn a \emph{merging predictor}:
+\begin{equation}
+f_\theta: \mathcal{W} \times \mathcal{W} \to \mathcal{W}, \quad
+f_\theta(w_{\tau_1}, w_{\tau_2}) \approx w_{\tau_1 \cup \tau_2}
+\label{eq:merge_objective}
+\end{equation}
+trained on a database of $(w_{\tau_1}, w_{\tau_2}, w_{\tau_1\cup\tau_2})$ triplets. The predicted $\hat{w} = f_\theta(w_{\tau_1}, w_{\tau_2})$ is evaluated by fine-tuning a CNN initialized at $\hat{w}$ on a fixed 100-sample held-out set for 5 epochs, then measuring in-distribution (ID) classification accuracy on $\tau_1 \cup \tau_2$.
+
+\subsection{Weight Zoo Construction}
+
+We build a \emph{weight zoo}: 4,052 CNN weight vectors trained on all valid task subsets of MNIST classes $\{0,\ldots,9\}$, indexed by $(label\_set, activation, epoch)$. The lookup index enables $O(1)$ retrieval per pair. Training data statistics depend on the overlap regime:
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{lccc}
+\hline
+\textbf{Overlap} & \textbf{Train pairs} & \textbf{Val pairs} & \textbf{Test pairs} \\
+\hline
+0 (disjoint)  & 32,812  & 7,030  & 7,030 \\
+1 (partial)   & 130,620 & 27,990 & 27,990 \\
+2 (high)      & 130,620 & 27,990 & 27,990 \\
+\hline
+\end{tabular}
+\caption{Dataset sizes per overlap regime. Overlap controls how many valid $(w_{\tau_1}, w_{\tau_2}, w_{\tau_1\cup\tau_2})$ triplets exist.}
+\label{tab:dataset}
+\end{table}
+
+\textbf{Layer-wise normalization.} Weights are standardized per layer segment using boundaries $[0, 208, 1{,}414, 1{,}514, 2{,}254, 2{,}464]$ corresponding to (conv1\_w, conv1\_b, conv2\_w, conv2\_b, fc\_w, fc\_b). This prevents dominant layers from dominating the training signal.
+
+\subsection{TransformerAE Architecture}
+
+The dual-encoder TransformerAE processes both input weight vectors in parallel:
+\begin{equation}
+\hat{w} = \text{Dec}\!\left(\text{Enc}(w_{\tau_1}) \oplus \text{Enc}(w_{\tau_2})\right)
+\label{eq:dual_enc}
+\end{equation}
+where $\oplus$ denotes concatenation-then-projection. The encoder treats weights as sequences of 16-parameter patches (154 patches for $d=2{,}464$):
+
+\begin{itemize}
+    \item \textbf{Encoder}: 3 transformer layers, 2 attention heads, dropout $p=0.1$; processes each input independently
+    \item \textbf{Bottleneck}: latent merge of dual encodings via linear projection
+    \item \textbf{Decoder}: 2 transformer layers for weight reconstruction
+    \item \textbf{Total parameters}: 4.02M
+\end{itemize}
+
+Attention is computed as:
+\begin{equation}
+\text{Attn}(Q,K,V) = \text{softmax}\!\left(\tfrac{QK^\top}{\sqrt{d_k}}\right)V
+\label{eq:attention}
+\end{equation}
+
+\subsection{Loss Function Taxonomy (39 functions)}
+
+All loss functions compare the predicted weights $\hat{w}$ to ground-truth merged weights $w^*$. We organize them into three hierarchical levels:
+
+\textbf{Level 1---Individual losses (13 base):}
+\begin{itemize}
+    \item \textit{Reconstruction}: MSE, MAE, MAPE, Quantile
+    \item \textit{Spectral}: FFT, MelSpec
+    \item \textit{Optimal transport}: Sinkhorn (Wasserstein-2 via \texttt{geomloss})
+    \item \textit{Information-theoretic}: KL, JS
+    \item \textit{Geometric/norm}: Frobenius, LogNorm, FIM
+    \item \textit{Autoregressive}: AUTO
+\end{itemize}
+
+\textbf{Level 2---Layer-wise variants (LW\_*):}
+Each base loss is applied independently to each of the 5 CNN layers, then summed:
+\begin{equation}
+\mathcal{L}_{\text{LW}} = \sum_{l=1}^{5} \mathcal{L}(w^{(l)}_{\text{pred}},\, w^{(l)}_*)
+\label{eq:layerwise}
+\end{equation}
+Boundaries: $[0, 208, 1{,}414, 1{,}514, 2{,}254, 2{,}464]$.
+
+\textbf{Level 3---Regularized combinations (13 combos):}
+\begin{equation}
+\mathcal{L}_{\text{reg}} = \mathcal{L}_{\text{main}}(\hat{w}, w^*) + \lambda\,\mathcal{L}_{\text{aux}}(\hat{w}, w^*)
+\label{eq:regularized}
+\end{equation}
+Selected pairs and weights: MSE+$0.05\times$Frobenius, MSE+$0.1\times$LogNorm, FFT+$0.1\times$MelSpec, Sinkhorn+$0.15\times$KL, and layerwise equivalents. The regularizer $\lambda$ is chosen to keep the auxiliary term sub-dominant ($\lambda \leq 0.15$).
+
+\textbf{Topological losses (6, Level 3):} DiffPers, RTD, LW\_DiffPers, LW\_RTD, MSE+$0.1\times$DiffPers, LW\_MSE+$0.01\times$LW\_PersLandscape. These directly optimize features of the Vietoris-Rips persistence diagram of the predicted weight manifold. \textcolor{gray}{[Results pending.]}
+
+\subsection{Topological Analysis}
+
+\textbf{Gromov--Wasserstein distance.} For each trained model we compute $d_{\text{GW}}$ between the weight distribution of predicted outputs and ground-truth weights, measuring geometric dissimilarity beyond pointwise MSE.
+
+\textbf{Multiparameter persistent homology.} We construct a bifiltration over (weight magnitude, layer position) and compute rank invariants on a $10\times10$ grid using \texttt{multipers}~\cite{lesnickInteractiveVisualization2015}. Features extracted: $\beta_0, \beta_1$, persistence entropy $E = -\sum_i p_i\log p_i$, effective rank $r_{\text{eff}} = e^E$, total persistence.
+
+\textbf{HMMR time-series segmentation.} Training loss curves are segmented using changepoint detection to identify distinct training phases (fast descent, plateau, oscillation). \textcolor{gray}{[Results pending.]}
+
+\subsection{Evaluation Protocol}
+
+For each trained $f_\theta$:
+\begin{enumerate}
+    \item Run $f_\theta$ on all test-set pairs $(w_{\tau_1}, w_{\tau_2})$ to obtain $\hat{w}$.
+    \item Initialize CNN at $\hat{w}$; record initial accuracy (pre-finetune).
+    \item Fine-tune for 5 epochs on 100 fixed samples drawn with seed 42 (identical across all experiments).
+    \item Record final in-distribution (ID) and out-of-distribution (OOD) accuracy.
+    \item Compute reconstruction metrics: cosine similarity, Wasserstein-1, GW distance.
+\end{enumerate}
+
+All 56 completed experiments share \emph{identical} evaluation samples (seed 42, $n=100$), ensuring strict comparability.

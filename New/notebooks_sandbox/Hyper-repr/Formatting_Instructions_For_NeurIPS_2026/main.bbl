@@ -1,0 +1,255 @@
+\begin{thebibliography}{37}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Ava()]{AvalancheEndtoEndLibrary}
+Avalanche: An {{End-to-End Library}} for {{Continual Learning}} \textbar{}
+  {{Avalanche}}.
+\newblock https://avalanche.continualai.org.
+
+\bibitem[Top()]{TopologicalDataAnalysis}
+Topological data analysis of decision boundaries with application to model
+  selection ({{Ramamurthy}} et al., 2019) - {{Google Search}}.
+\newblock
+  https://www.google.com/search?client=firefox-b-d\&q=Topological+data+analysis+of+decision+boundaries+with+application+to+model+selection+\%28Ramamurthy+et+al.\%2C+2019\%29.
+
+\bibitem[Hyp(2025)]{HyperRepresentationsGenerativeModels2025}
+Hyper-{{Representations}} as {{Generative Models}}: {{Sampling Unseen Neural
+  Network Weights P63172}} \textbar{} {{GTC}} 2024 \textbar{} {{NVIDIA
+  On-Demand}}.
+\newblock https://www.nvidia.com/en-us/on-demand/session/gtc24-p63172/,
+  November 2025.
+
+\bibitem[Adams et~al.(2017)Adams, Emerson, Kirby, Neville, Peterson, Shipman,
+  Chepushtanova, Hanson, Motta, and
+  Ziegelmeier]{adamsPersistenceImagesStable2017}
+Henry Adams, Tegan Emerson, Michael Kirby, Rachel Neville, Chris Peterson,
+  Patrick Shipman, Sofya Chepushtanova, Eric Hanson, Francis Motta, and Lori
+  Ziegelmeier.
+\newblock Persistence {{Images}}: {{A Stable Vector Representation}} of
+  {{Persistent Homology}}.
+\newblock \emph{Journal of Machine Learning Research}, 18\penalty0
+  (8):\penalty0 1--35, 2017.
+
+\bibitem[Bahri et~al.(2020)Bahri, Kadmon, Pennington, Schoenholz,
+  {Sohl-Dickstein}, and Ganguli]{bahriStatisticalMechanicsDeep2020}
+Yasaman Bahri, Jonathan Kadmon, Jeffrey Pennington, Sam~S. Schoenholz, Jascha
+  {Sohl-Dickstein}, and Surya Ganguli.
+\newblock Statistical {{Mechanics}} of {{Deep Learning}}.
+\newblock \emph{Annual Review of Condensed Matter Physics}, 11\penalty0
+  (1):\penalty0 501--528, March 2020.
+\newblock ISSN 1947-5454, 1947-5462.
+\newblock \doi{10.1146/annurev-conmatphys-031119-050745}.
+
+\bibitem[Ballester et~al.(2024)Ballester, Casacuberta, and
+  Escalera]{ballesterTopologicalDataAnalysis2024}
+Rub{\'e}n Ballester, Carles Casacuberta, and Sergio Escalera.
+\newblock Topological {{Data Analysis}} for {{Neural Network Analysis}}: {{A
+  Comprehensive Survey}}, January 2024.
+
+\bibitem[Barannikov et~al.(2022)Barannikov, Trofimov, Balabin, and
+  Burnaev]{barannikovRepresentationTopologyDivergence2022}
+Serguei Barannikov, Ilya Trofimov, Nikita Balabin, and Evgeny Burnaev.
+\newblock Representation {{Topology Divergence}}: {{A Method}} for {{Comparing
+  Neural Network Representations}}, June 2022.
+
+\bibitem[Birdal et~al.(2021)Birdal, Lou, Guibas, and {\c S}im{\c
+  s}ekli]{birdalIntrinsicDimensionPersistent2021}
+Tolga Birdal, Aaron Lou, Leonidas Guibas, and Umut {\c S}im{\c s}ekli.
+\newblock Intrinsic {{Dimension}}, {{Persistent Homology}} and
+  {{Generalization}} in {{Neural Networks}}, November 2021.
+
+\bibitem[Brenier(1991)]{brenierPolarFactorizationMonotone1991}
+Yann Brenier.
+\newblock Polar factorization and monotone rearrangement of vector-valued
+  functions.
+\newblock \emph{Communications on Pure and Applied Mathematics}, 44\penalty0
+  (4):\penalty0 375--417, June 1991.
+\newblock ISSN 0010-3640, 1097-0312.
+\newblock \doi{10.1002/cpa.3160440402}.
+
+\bibitem[Bubenik(2015)]{bubenikStatisticalTopologicalData2015}
+Peter Bubenik.
+\newblock Statistical topological data analysis using persistence landscapes.
+\newblock \emph{Journal of Machine Learning Research}, 16\penalty0
+  (1):\penalty0 77--102, 2015.
+
+\bibitem[Carlsson and
+  Zomorodian(2009)]{carlssonTheoryMultidimensionalPersistence2009}
+Gunnar Carlsson and Afra Zomorodian.
+\newblock The {{Theory}} of {{Multidimensional Persistence}}.
+\newblock \emph{Discrete \& Computational Geometry}, 42\penalty0 (1):\penalty0
+  71--93, July 2009.
+\newblock ISSN 0179-5376, 1432-0444.
+\newblock \doi{10.1007/s00454-009-9176-0}.
+
+\bibitem[Carri{\`e}re et~al.(2017)Carri{\`e}re, Cuturi, and
+  Oudot]{carriereSlicedWassersteinKernel2017}
+Mathieu Carri{\`e}re, Marco Cuturi, and Steve Oudot.
+\newblock Sliced {{Wasserstein Kernel}} for {{Persistence Diagrams}}.
+\newblock In \emph{International {{Conference}} on {{Machine Learning}}}, pages
+  664--673. PMLR, 2017.
+
+\bibitem[Chen et~al.(2018)Chen, Ni, Bai, and
+  Wang]{chenTopologicalRegularizerClassifiers2018}
+Chao Chen, Xiuyan Ni, Qinxun Bai, and Yusu Wang.
+\newblock A {{Topological Regularizer}} for {{Classifiers}} via {{Persistent
+  Homology}}, October 2018.
+
+\bibitem[Gebhart et~al.(2019)Gebhart, Schrater, and
+  Hylton]{gebhartCharacterizingShapeActivation2019}
+Thomas Gebhart, Paul Schrater, and Alan Hylton.
+\newblock Characterizing the {{Shape}} of {{Activation Space}} in {{Deep Neural
+  Networks}}, May 2019.
+
+\bibitem[{janv. 2022}()]{janv.2022ContinualLearningCourse}
+10~vid{\'e}os Derni{\`e}re modification le~6 {janv. 2022}.
+\newblock {Continual Learning Course}.
+\newblock
+  http://www.youtube.com/playlist?list=PLm6QXeaB-XkBfM5RgQP6wCR7Jegdg51Px.
+
+\bibitem[Knyazev et~al.(2025)Knyazev, Moudgil, Lajoie, Belilovsky, and
+  {Lacoste-Julien}]{knyazevAcceleratingTrainingNeuron2025}
+Boris Knyazev, Abhinav Moudgil, Guillaume Lajoie, Eugene Belilovsky, and Simon
+  {Lacoste-Julien}.
+\newblock Accelerating {{Training}} with {{Neuron Interaction}} and
+  {{Nowcasting Networks}}, February 2025.
+
+\bibitem[Li et~al.(2020)Li, Dasarathy, Ramamurthy, and
+  Berisha]{liFindingHomologyDecision2020}
+Weizhi Li, Gautam Dasarathy, Karthikeyan~Natesan Ramamurthy, and Visar Berisha.
+\newblock Finding the {{Homology}} of {{Decision Boundaries}} with {{Active
+  Learning}}, November 2020.
+
+\bibitem[Loiseaux et~al.(2022)Loiseaux, Carri{\`e}re, and
+  Blumberg]{loiseauxMultiparameterModuleApproximation2022}
+David Loiseaux, Mathieu Carri{\`e}re, and Andrew~J. Blumberg.
+\newblock Multi-parameter {{Module Approximation}}: An efficient and
+  interpretable invariant for multi-parameter persistence modules with
+  guarantees, 2022.
+
+\bibitem[Loiseaux et~al.(2023)Loiseaux, Carri{\`e}re, and
+  Blumberg]{loiseauxFrameworkFastStable2023}
+David Loiseaux, Mathieu Carri{\`e}re, and Andrew~J. Blumberg.
+\newblock A {{Framework}} for {{Fast}} and {{Stable Representations}} of
+  {{Multiparameter Persistent Homology Decompositions}}, June 2023.
+
+\bibitem[Loiseaux et~al.(2024)Loiseaux, Scoccola, Carri{\`e}re, Botnan, and
+  Oudot]{loiseauxStableVectorizationMultiparameter2024a}
+David Loiseaux, Luis Scoccola, Mathieu Carri{\`e}re, Magnus~Bakke Botnan, and
+  Steve Oudot.
+\newblock Stable {{Vectorization}} of {{Multiparameter Persistent Homology}}
+  using {{Signed Barcodes}} as {{Measures}}, February 2024.
+
+\bibitem[Naitzat et~al.(2020)Naitzat, Zhitnikov, and
+  Lim]{naitzatTopologyDeepNeural2020}
+Gregory Naitzat, Andrey Zhitnikov, and Lek-Heng Lim.
+\newblock Topology of deep neural networks, April 2020.
+
+\bibitem[Oudot and Scoccola(2026)]{oudotAlgebraicIntroductionPersistence2026}
+Steve Oudot and Luis Scoccola.
+\newblock An {{Algebraic Introduction}} to {{Persistence}}, April 2026.
+\newblock URL \url{https://arxiv.org/abs/2604.07022}.
+\newblock Survey on the algebraic foundations of persistence.
+
+\bibitem[Peyre()]{peyreCourseNotesComputational}
+Gabriel Peyre.
+\newblock Course notes on {{Computational Optimal Transport}}.
+
+\bibitem[Qi et~al.(2023)Qi, Zhao, and Li]{qiBetterGenerativeReplay2023}
+Daiqing Qi, Handong Zhao, and Sheng Li.
+\newblock Better {{Generative Replay}} for {{Continual Federated Learning}},
+  February 2023.
+
+\bibitem[Reininghaus et~al.(2015)Reininghaus, Huber, Bauer, and
+  Kwitt]{reininghausStableMultiScaleKernel2014}
+Jan Reininghaus, Stefan Huber, Ulrich Bauer, and Roland Kwitt.
+\newblock A {{Stable Multi-Scale Kernel}} for {{Topological Machine Learning}}.
+\newblock In \emph{IEEE Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, pages 4741--4748, 2015.
+
+\bibitem[Rieck et~al.(2018)Rieck, Togninalli, Bock, Moor, Horn, Gumbsch, and
+  Borgwardt]{rieckNeuralPersistenceComplexity2018}
+Bastian Rieck, Matteo Togninalli, Christian Bock, Michael Moor, Max Horn,
+  Thomas Gumbsch, and Karsten Borgwardt.
+\newblock Neural {{Persistence}}: {{A Complexity Measure}} for {{Deep Neural
+  Networks Using Algebraic Topology}}.
+\newblock In \emph{International {{Conference}} on {{Learning
+  Representations}}}, September 2018.
+
+\bibitem[Rosasco et~al.(2021)Rosasco, Carta, Cossu, Lomonaco, and
+  Bacciu]{rosascoDistilledReplayOvercoming2021}
+Andrea Rosasco, Antonio Carta, Andrea Cossu, Vincenzo Lomonaco, and Davide
+  Bacciu.
+\newblock Distilled {{Replay}}: {{Overcoming Forgetting}} through {{Synthetic
+  Samples}}, June 2021.
+
+\bibitem[Sch{\"u}rholt(2024)]{schurholtHyperRepresentationsLearningPopulations2024}
+Konstantin Sch{\"u}rholt.
+\newblock Hyper-{{Representations}}: {{Learning}} from {{Populations}} of
+  {{Neural Networks}}, October 2024.
+
+\bibitem[Sch{\"u}rholt et~al.(2021)Sch{\"u}rholt, Kostadinov, and
+  Borth]{schurholtSelfSupervisedRepresentationLearning2021}
+Konstantin Sch{\"u}rholt, Dimche Kostadinov, and Damian Borth.
+\newblock Self-{{Supervised Representation Learning}} on {{Neural Network
+  Weights}} for {{Model Characteristic Prediction}}.
+\newblock In \emph{Advances in {{Neural Information Processing Systems}}},
+  volume~34, pages 16481--16493. Curran Associates, Inc., 2021.
+
+\bibitem[Sch{\"u}rholt et~al.(2022)Sch{\"u}rholt, Knyazev, {Gir{\'o}-i-Nieto},
+  and Borth]{schurholtHyperRepresentationsPreTrainingTransfer2022}
+Konstantin Sch{\"u}rholt, Boris Knyazev, Xavier {Gir{\'o}-i-Nieto}, and Damian
+  Borth.
+\newblock Hyper-{{Representations}} for {{Pre-Training}} and {{Transfer
+  Learning}}, July 2022.
+
+\bibitem[Scoccola et~al.(2024)Scoccola, Setlur, Loiseaux, Carri{\`e}re, and
+  Oudot]{scoccolaDifferentiabilityOptimizationMultiparameter2024}
+Luis Scoccola, Siddharth Setlur, David Loiseaux, Mathieu Carri{\`e}re, and
+  Steve Oudot.
+\newblock Differentiability and {{Optimization}} of {{Multiparameter Persistent
+  Homology}}, August 2024.
+
+\bibitem[Shin et~al.(2017)Shin, Lee, Kim, and
+  Kim]{shinContinualLearningDeep2017}
+Hanul Shin, Jung~Kwon Lee, Jaehong Kim, and Jiwon Kim.
+\newblock Continual {{Learning}} with {{Deep Generative Replay}}, December
+  2017.
+
+\bibitem[Singh et~al.(2007)Singh, M{\'e}moli, and
+  Carlsson]{singhTopologicalMethodsAnalysis2007}
+Gurjeet Singh, Facundo M{\'e}moli, and Gunnar Carlsson.
+\newblock Topological {{Methods}} for the {{Analysis}} of {{High Dimensional
+  Data Sets}} and {{3D Object Recognition}}.
+\newblock In \emph{Eurographics {{Symposium}} on {{Point-Based Graphics}}},
+  pages 91--100, 2007.
+
+\bibitem[Soro et~al.(2024)Soro, Andreis, Lee, Jeong, Chong, Hutter, and
+  Hwang]{soroDiffusionBasedNeuralNetwork2024}
+Bedionita Soro, Bruno Andreis, Hayeon Lee, Wonyong Jeong, Song Chong, Frank
+  Hutter, and Sung~Ju Hwang.
+\newblock Diffusion-{{Based Neural Network Weights Generation}}, October 2024.
+
+\bibitem[Vladymyrov et~al.(2024)Vladymyrov, Zhmoginov, and
+  Sandler]{vladymyrovContinualHyperTransformerMetaLearner2024}
+Max Vladymyrov, Andrey Zhmoginov, and Mark Sandler.
+\newblock Continual {{HyperTransformer}}: {{A Meta-Learner}} for {{Continual
+  Few-Shot Learning}}, August 2024.
+
+\bibitem[Wang et~al.(2024)Wang, Zhang, Su, and
+  Zhu]{wangComprehensiveSurveyContinual2024}
+Liyuan Wang, Xingxing Zhang, Hang Su, and Jun Zhu.
+\newblock A {{Comprehensive Survey}} of {{Continual Learning}}: {{Theory}},
+  {{Method}} and {{Application}}, February 2024.
+
+\bibitem[Yoon et~al.(2021)Yoon, Jeong, Lee, Yang, and
+  Hwang]{yoonFederatedContinualLearning2021}
+Jaehong Yoon, Wonyong Jeong, Giwoong Lee, Eunho Yang, and Sung~Ju Hwang.
+\newblock Federated {{Continual Learning}} with {{Weighted Inter-client
+  Transfer}}, June 2021.
+
+\end{thebibliography}

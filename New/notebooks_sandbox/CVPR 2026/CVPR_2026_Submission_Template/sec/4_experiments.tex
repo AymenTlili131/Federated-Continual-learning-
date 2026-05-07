@@ -1,0 +1,85 @@
+\section{Experimental Setup}
+\label{sec:experiments}
+
+\subsection{Base CNN Architecture}
+
+The target CNN (whose weights we predict) has the following structure:
+\begin{itemize}
+    \item Conv1: $1\to32$ filters, $3\times3$, ReLU
+    \item Conv2: $32\to64$ filters, $3\times3$, ReLU
+    \item FC1: $64\times9\times9 \to 128$, LeakyReLU
+    \item FC2: $128 \to C$ (C = number of task classes, variable)
+    \item \textbf{Total fixed weights}: $d = 2{,}464$ parameters
+    \item \textbf{Layer boundaries}: $[208, 1{,}414, 1{,}514, 2{,}254, 2{,}464]$
+\end{itemize}
+
+\subsection{TransformerAE Training Protocol}
+
+\begin{itemize}
+    \item \textbf{Epochs}: 200 (all experiments converge; checkpointed at best val loss)
+    \item \textbf{Batch size}: 24
+    \item \textbf{Optimizer}: AdamW, lr $= 10^{-4}$, weight decay $10^{-5}$
+    \item \textbf{Scheduler}: CosineAnnealingLR, $T_{\max}=200$
+    \item \textbf{Dropout}: 0.1 in encoder and decoder
+    \item \textbf{Checkpoint frequency}: Best val-loss + final epoch
+\end{itemize}
+
+\subsection{Tournament Design}
+
+We run a progressive multi-stage tournament. \textbf{Stage 1 (tiny)} uses 39 curated loss functions across overlaps $\{0,1,2\}$ (117 total experiments). Subsequent stages use model-size progression with loss selection based on prior-stage rankings:
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{lcccc}
+\hline
+\textbf{Stage} & \textbf{Model} & \textbf{Selection} & \textbf{Exps.} & \textbf{Status} \\
+\hline
+1 & tiny   & All 39 losses     & 117 & 56 done, 63 running \\
+2 & small  & top 30\% + bot 10\% & $\sim$48 & \textcolor{gray}{TBD} \\
+3 & medium & top 20\% + bot 5\%  & $\sim$27 & \textcolor{gray}{TBD} \\
+4 & large  & top 10\% + bot 2.5\% & $\sim$15 & \textcolor{gray}{TBD} \\
+\hline
+\end{tabular}
+\caption{Tournament schedule. ``bot'' rows test whether worst performers are loss-specific failures or architecture-limited.}
+\label{tab:tournament}
+\end{table}
+
+The ``bottom carrier'' rule---advancing worst performers alongside top---tests whether low-overlap failures recover under larger model capacity, separating architecture-limited from loss-limited behavior.
+
+\subsection{Completed Experiments (Stage 1, Partial)}
+
+Of the 117 planned Stage-1 experiments, \textbf{56 have completed}: 20 for overlap 0, 18 each for overlaps 1 and 2. These cover the following loss families:
+\begin{itemize}
+    \item Reconstruction: MSE, MAE, MAPE (+ layerwise)
+    \item Spectral: FFT, FFT+$0.1\times$MelSpec (+ LW variants)
+    \item Optimal transport: Sinkhorn, LW\_Sinkhorn
+    \item Norm-regularized: MSE+$0.05\times$Frobenius, MSE+$0.1\times$LogNorm (+ LW)
+    \item MAPE regularized: MAPE+$0.1\times$JS, LW\_MAPE+$0.1\times$LW\_JS
+    \item Autoregressive: AUTO
+    \item LWLN (layerwise log-norm normalization)
+\end{itemize}
+
+Running ($n=63$): DiffPers, RTD, LW\_DiffPers, LW\_RTD, persistence combos, MelSpec, LW\_FFT, Sinkhorn+KL, FIM, Quantile, and variants.
+
+\subsection{CNN Fine-Tuning Evaluation}
+
+For each checkpoint (epochs 25, 50, 75, 100, 125, 150, 175, 200), we:
+\begin{enumerate}
+    \item Sample 10 test pairs from the held-out set
+    \item Run inference to obtain 10 predicted weight vectors
+    \item Initialize 10 CNNs and fine-tune each for 5 epochs (batch size 24) on 100 samples
+    \item Record ID accuracy (on $\tau_1\cup\tau_2$ classes) and OOD accuracy (on held-out classes)
+\end{enumerate}
+
+\textbf{Fair evaluation:} The final comparative ranking uses a \emph{fixed} 100-sample set (seed 42, identical across all experiments) and the best-epoch checkpoint. This ensures all 39 losses are compared under identical conditions.
+
+\subsection{Computational Resources}
+
+All experiments run on a single \textbf{NVIDIA RTX 5060 Ti (16.61 GB)} GPU. Wall-clock times per experiment:
+\begin{itemize}
+    \item Overlap 0: $\approx$45--90 min/experiment (32K pairs)
+    \item Overlap 1/2: $\approx$2--4 h/experiment (130K pairs)
+    \item Topological losses (DiffPers, RTD): $\approx$2$\times$ slower due to persistent homology computation
+\end{itemize}
+
+Total Stage-1 budget: $\approx 117 \times 2.5\text{h avg} \approx 293$ GPU-hours.

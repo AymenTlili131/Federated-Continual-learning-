@@ -1,0 +1,59 @@
+✓ GUDHI available
+✓ Multipers available (v2.3.4)
+
+================================================================================
+COMPREHENSIVE TOPOLOGICAL ANALYSIS
+Normal Persistence (GUDHI) + Multiparameter Persistence (Multipers)
+================================================================================
+
+1. Finding checkpoints since March 20, 2024...
+Found 54 checkpoints
+Date range: 2026-03-19 to 2026-04-01
+
+2. Loading checkpoint weights...
+Loading weights:   0%|          | 0/54 [00:00<?, ?it/s]Loading weights:   4%|▎         | 2/54 [00:00<00:02, 17.54it/s]Loading weights:  11%|█         | 6/54 [00:00<00:01, 25.36it/s]Loading weights:  17%|█▋        | 9/54 [00:00<00:01, 26.75it/s]Loading weights:  22%|██▏       | 12/54 [00:00<00:01, 27.69it/s]Loading weights:  28%|██▊       | 15/54 [00:00<00:01, 28.45it/s]Loading weights:  33%|███▎      | 18/54 [00:00<00:01, 27.85it/s]Loading weights:  39%|███▉      | 21/54 [00:00<00:01, 27.10it/s]Loading weights:  44%|████▍     | 24/54 [00:00<00:01, 27.07it/s]Loading weights:  50%|█████     | 27/54 [00:00<00:00, 27.53it/s]Loading weights:  56%|█████▌    | 30/54 [00:01<00:00, 28.16it/s]Loading weights:  61%|██████    | 33/54 [00:01<00:00, 28.05it/s]Loading weights:  69%|██████▊   | 37/54 [00:01<00:00, 29.59it/s]Loading weights:  76%|███████▌  | 41/54 [00:01<00:00, 29.27it/s]Loading weights:  81%|████████▏ | 44/54 [00:01<00:00, 27.35it/s]Loading weights:  87%|████████▋ | 47/54 [00:01<00:00, 26.95it/s]Loading weights:  93%|█████████▎| 50/54 [00:01<00:00, 25.10it/s]Loading weights:  98%|█████████▊| 53/54 [00:02<00:00, 19.59it/s]Loading weights: 100%|██████████| 54/54 [00:02<00:00, 24.85it/s]
+Loaded weights from 54 checkpoints
+Weight dimensions: 3942400 parameters
+
+================================================================================
+3. NORMAL PERSISTENT HOMOLOGY ANALYSIS (GUDHI)
+================================================================================
+Computing normal persistence:   0%|          | 0/54 [00:00<?, ?it/s]Computing normal persistence:   2%|▏         | 1/54 [00:11<10:05, 11.42s/it]Computing normal persistence:   4%|▎         | 2/54 [00:22<09:55, 11.46s/it]Computing normal persistence:   6%|▌         | 3/54 [00:34<09:40, 11.37s/it]Computing normal persistence:   7%|▋         | 4/54 [00:45<09:27, 11.35s/it]Computing normal persistence:   9%|▉         | 5/54 [00:57<09:31, 11.67s/it]Computing normal persistence:  11%|█         | 6/54 [01:09<09:14, 11.55s/it]Computing normal persistence:  13%|█▎        | 7/54 [01:20<09:08, 11.67s/it]Computing normal persistence:  15%|█▍        | 8/54 [01:32<08:58, 11.71s/it]Computing normal persistence:  17%|█▋        | 9/54 [01:44<08:43, 11.64s/it]Computing normal persistence:  19%|█▊        | 10/54 [01:56<08:37, 11.77s/it]Computing normal persistence:  20%|██        | 11/54 [02:08<08:29, 11.85s/it]Computing normal persistence:  22%|██▏       | 12/54 [02:20<08:17, 11.85s/it]Computing normal persistence:  24%|██▍       | 13/54 [02:32<08:12, 12.00s/it]Computing normal persistence:  26%|██▌       | 14/54 [02:44<08:02, 12.07s/it]Computing normal persistence:  28%|██▊       | 15/54 [02:56<07:43, 11.89s/it]Computing normal persistence:  30%|██▉       | 16/54 [03:08<07:33, 11.94s/it]Computing normal persistence:  31%|███▏      | 17/54 [03:19<07:17, 11.83s/it]Computing normal persistence:  33%|███▎      | 18/54 [03:32<07:15, 12.11s/it]Computing normal persistence:  35%|███▌      | 19/54 [03:44<07:04, 12.12s/it]Computing normal persistence:  37%|███▋      | 20/54 [03:56<06:44, 11.90s/it]Computing normal persistence:  39%|███▉      | 21/54 [04:07<06:26, 11.72s/it]Computing normal persistence:  41%|████      | 22/54 [04:18<06:08, 11.52s/it]Computing normal persistence:  43%|████▎     | 23/54 [04:30<05:58, 11.55s/it]Computing normal persistence:  44%|████▍     | 24/54 [04:41<05:45, 11.52s/it]Computing normal persistence:  46%|████▋     | 25/54 [04:53<05:38, 11.66s/it]Computing normal persistence:  48%|████▊     | 26/54 [05:05<05:26, 11.68s/it]Computing normal persistence:  50%|█████     | 27/54 [05:16<05:13, 11.63s/it]Computing normal persistence:  52%|█████▏    | 28/54 [05:27<04:58, 11.47s/it]Computing normal persistence:  54%|█████▎    | 29/54 [05:39<04:50, 11.62s/it]Computing normal persistence:  56%|█████▌    | 30/54 [05:51<04:39, 11.65s/it]Computing normal persistence:  57%|█████▋    | 31/54 [06:03<04:28, 11.68s/it]Computing normal persistence:  59%|█████▉    | 32/54 [06:14<04:11, 11.44s/it]Computing normal persistence:  61%|██████    | 33/54 [06:25<03:59, 11.40s/it]Computing normal persistence:  63%|██████▎   | 34/54 [06:37<03:50, 11.52s/it]Computing normal persistence:  65%|██████▍   | 35/54 [06:48<03:34, 11.29s/it]Computing normal persistence:  67%|██████▋   | 36/54 [06:59<03:23, 11.32s/it]Computing normal persistence:  69%|██████▊   | 37/54 [07:11<03:15, 11.51s/it]Computing normal persistence:  70%|███████   | 38/54 [07:22<03:03, 11.44s/it]Computing normal persistence:  72%|███████▏  | 39/54 [07:33<02:50, 11.38s/it]Computing normal persistence:  74%|███████▍  | 40/54 [07:45<02:38, 11.30s/it]Computing normal persistence:  76%|███████▌  | 41/54 [07:56<02:27, 11.33s/it]Computing normal persistence:  78%|███████▊  | 42/54 [08:07<02:15, 11.32s/it]Computing normal persistence:  80%|███████▉  | 43/54 [08:19<02:05, 11.42s/it]Computing normal persistence:  81%|████████▏ | 44/54 [08:31<01:55, 11.57s/it]Computing normal persistence:  83%|████████▎ | 45/54 [08:42<01:43, 11.51s/it]Computing normal persistence:  85%|████████▌ | 46/54 [08:54<01:31, 11.48s/it]Computing normal persistence:  87%|████████▋ | 47/54 [09:06<01:21, 11.67s/it]Computing normal persistence:  89%|████████▉ | 48/54 [09:17<01:09, 11.63s/it]Computing normal persistence:  91%|█████████ | 49/54 [09:29<00:59, 11.82s/it]Computing normal persistence:  93%|█████████▎| 50/54 [09:41<00:46, 11.59s/it]Computing normal persistence:  94%|█████████▍| 51/54 [09:51<00:33, 11.29s/it]Computing normal persistence:  96%|█████████▋| 52/54 [10:03<00:22, 11.46s/it]Computing normal persistence:  98%|█████████▊| 53/54 [10:17<00:12, 12.29s/it]Computing normal persistence: 100%|██████████| 54/54 [10:29<00:00, 12.14s/it]Computing normal persistence: 100%|██████████| 54/54 [10:29<00:00, 11.66s/it]
+
+✓ Computed normal persistence for 54 checkpoints
+
+Summary statistics:
+       betti_0  betti_1  betti_2  pers_entropy_1  total_pers_1
+count     54.0     54.0     54.0    5.400000e+01     54.000000
+mean       1.0      0.0      0.0    5.105970e+00      4.304732
+std        0.0      0.0      0.0    2.264256e+00      3.788829
+min        1.0      0.0      0.0   -1.000000e-10      0.000000
+25%        1.0      0.0      0.0    4.830190e+00      1.004485
+50%        1.0      0.0      0.0    5.682420e+00      3.051050
+75%        1.0      0.0      0.0    6.911990e+00      7.519402
+max        1.0      0.0      0.0    7.258914e+00     11.366761
+
+================================================================================
+4. MULTIPARAMETER PERSISTENT HOMOLOGY ANALYSIS (Multipers)
+================================================================================
+Computing multiparameter persistence:   0%|          | 0/54 [00:00<?, ?it/s]Computing multiparameter persistence:   6%|▌         | 3/54 [00:00<00:01, 28.17it/s]Computing multiparameter persistence:  11%|█         | 6/54 [00:00<00:01, 28.60it/s]Computing multiparameter persistence:  17%|█▋        | 9/54 [00:00<00:01, 28.96it/s]Computing multiparameter persistence:  22%|██▏       | 12/54 [00:00<00:01, 29.11it/s]Computing multiparameter persistence:  28%|██▊       | 15/54 [00:00<00:01, 29.01it/s]Computing multiparameter persistence:  33%|███▎      | 18/54 [00:00<00:01, 28.20it/s]Computing multiparameter persistence:  39%|███▉      | 21/54 [00:00<00:01, 28.48it/s]Computing multiparameter persistence:  44%|████▍     | 24/54 [00:00<00:01, 28.62it/s]Computing multiparameter persistence:  50%|█████     | 27/54 [00:00<00:00, 28.59it/s]Computing multiparameter persistence:  56%|█████▌    | 30/54 [00:01<00:00, 28.72it/s]Computing multiparameter persistence:  61%|██████    | 33/54 [00:01<00:00, 28.73it/s]Computing multiparameter persistence:  67%|██████▋   | 36/54 [00:01<00:00, 28.19it/s]Computing multiparameter persistence:  72%|███████▏  | 39/54 [00:01<00:00, 28.69it/s]Computing multiparameter persistence:  78%|███████▊  | 42/54 [00:01<00:00, 29.04it/s]Computing multiparameter persistence:  83%|████████▎ | 45/54 [00:01<00:00, 27.72it/s]Computing multiparameter persistence:  89%|████████▉ | 48/54 [00:01<00:00, 27.99it/s]Computing multiparameter persistence:  94%|█████████▍| 51/54 [00:01<00:00, 28.51it/s]Computing multiparameter persistence: 100%|██████████| 54/54 [00:01<00:00, 28.61it/s]
+
+✓ Computed multiparameter persistence for 54 checkpoints
+
+================================================================================
+5. GENERATING VISUALIZATIONS
+================================================================================
+✓ Saved: betti_numbers_by_overlap.png
+✓ Saved: persistence_entropy_by_overlap.png
+
+================================================================================
+ANALYSIS COMPLETE
+================================================================================
+
+Results saved to:
+  - /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/cvpr_analysis_scripts/data/normal_persistence_results.csv
+  - /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/cvpr_analysis_scripts/data/multiparameter_persistence_results.json
+
+Figures saved to:
+  - /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/CVPR 2026/figures/betti_numbers_by_overlap.png
+  - /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/CVPR 2026/figures/persistence_entropy_by_overlap.png

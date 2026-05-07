@@ -1,0 +1,38 @@
+\section{Introduction}
+\label{sec:intro}
+
+\textbf{Federated Continual Learning (FCL)} poses a fundamental challenge: given models independently trained on disjoint task subsets $\tau_1, \tau_2 \subset \mathcal{T}$, can we produce a composed model for $\tau_1 \cup \tau_2$ \emph{without access to raw training data}? Classical federated averaging~\cite{mcmahanCommunicationEfficientLearningDeep2017} requires simultaneous client participation and fails under continual shift; gradient-based merging~\cite{kirkpatrickOvercomingCatastrophicForgetting2017} requires data access. We address this via \emph{weight-space prediction}: learn a mapping $f: (w_{\tau_1}, w_{\tau_2}) \mapsto \hat{w}_{\tau_1 \cup \tau_2}$ from paired weight vectors, treating model merging as a \emph{regression problem in weight space}.
+
+This framing has a critical advantage: at inference time, no data, gradients, or communication overhead is needed---the merged model is obtained in a single forward pass through $f$, followed by lightweight fine-tuning ($\leq$5 epochs, 100 samples) to restore task-specific calibration.
+
+\textbf{The challenge of loss function design.} The weight prediction problem spans a high-dimensional, geometrically complex manifold ($d = 2{,}464$ parameters for our CNN). The choice of training objective for $f$ profoundly shapes the learned weight space geometry: does the predicted $\hat{w}$ preserve distributional properties (motivating optimal transport~\cite{villaniOptimalTransportOld2009}), spectral structure (motivating FFT-based losses), or topological invariants (motivating persistence-based losses~\cite{hoferDeepLearningTopological2019})? No prior work has systematically characterized this trade-off.
+
+\textbf{Our approach.} We train a 4.02M-parameter dual-encoder \textbf{TransformerAE} on a \emph{weight zoo}---a database of 4,052 CNN weight vectors organized by task label, epoch, and activation---and evaluate 39 distinct loss functions spanning 7 families across three data-overlap regimes (disjoint, partial, high). Each trained model is evaluated by initializing a CNN with predicted weights and measuring accuracy after 5-epoch fine-tuning on 100 held-out samples, providing a directly interpretable downstream metric.
+
+\subsection{Contributions}
+
+\begin{enumerate}
+    \item \textbf{FCL weight prediction framework}: A dual-encoder TransformerAE that maps paired task weight vectors to merged-model weights, achieving $>$79\% CNN accuracy after 5-epoch fine-tuning from a 14\% random baseline---across all overlap conditions and loss families (\S\ref{sec:results}).
+
+    \item \textbf{Systematic 39-loss tournament}: The first large-scale comparison of reconstruction, spectral, optimal-transport, information-theoretic, geometric, autoregressive, and topological losses for weight-space prediction, revealing overlap-dependent winner profiles (\S\ref{sec:results}).
+
+    \item \textbf{Topological analysis of loss-induced weight geometry}: Using Gromov--Wasserstein distance, multiparameter persistent homology, and HMMR time-series segmentation, we characterize how loss choice shapes topological structure. OT losses yield lower GW distances ($7$--$20$) vs.\ reconstruction losses ($\sim$32), correlating with transfer efficiency (\S\ref{sec:results}). \textcolor{gray}{[Full topology results: TBD.]}
+
+    \item \textbf{Multi-stage tournament protocol}: A progressive elimination design (tiny $\to$ small $\to$ medium $\to$ large model) that identifies robust loss-overlap pairings under increasing representational capacity. \textcolor{gray}{[Small/medium/large stages: TBD.]}
+\end{enumerate}
+
+\subsection{Why Loss Function Matters for Weight-Space Prediction}
+
+The loss $\mathcal{L}(f(w_{\tau_1}, w_{\tau_2}),\, w_{\tau_1\cup\tau_2})$ determines the geometry of the learned prediction manifold. We identify seven families with distinct inductive biases:
+
+\begin{itemize}
+    \item \textbf{Reconstruction} (MSE, MAE, MAPE, Quantile): Direct $\ell_p$ distances; establish geometric baselines.
+    \item \textbf{Spectral} (FFT, MelSpec, LW\_FFT): Frequency-domain alignment; sensitive to oscillatory weight patterns.
+    \item \textbf{Optimal transport} (Sinkhorn, LW\_Sinkhorn, Sinkhorn+KL): Wasserstein-type matching; preserves distributional shape.
+    \item \textbf{Information-theoretic} (KL, JS): Probabilistic divergences; promote distributional coverage.
+    \item \textbf{Geometric/norm} (Frobenius, LogNorm, FIM): Matrix conditioning and scale control.
+    \item \textbf{Autoregressive} (AUTO): Temporal consistency of weight sequences.
+    \item \textbf{Topological} (DiffPers, RTD, PersLandscape, and layerwise variants): Directly optimize persistent homology features of predicted weight manifolds. \textcolor{gray}{[Results: TBD.]}
+\end{itemize}
+
+The remainder of this paper is organized as follows: \S\ref{sec:related} reviews related work. \S\ref{sec:method} details the weight-zoo construction, TransformerAE architecture, and loss taxonomy. \S\ref{sec:experiments} describes the experimental protocol. \S\ref{sec:results} presents current and forthcoming results. \S\ref{sec:conclusion} concludes.

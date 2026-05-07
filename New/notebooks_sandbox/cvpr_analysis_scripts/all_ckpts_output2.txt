@@ -1,0 +1,215 @@
+Using device: cuda
+
+================================================================================
+COMPLETE ANALYSIS: ALL 54 CHECKPOINTS
+================================================================================
+
+1. Loading test data (Ground Truth CNN weights)...
+   Zoo: 36468 samples, 2464 dimensions
+
+2. Finding ALL tiny model checkpoints...
+   Found 54 checkpoints
+
+3. Processing ALL checkpoints for inference...
+Processing checkpoints:   0%|          | 0/54 [00:00<?, ?it/s]Processing checkpoints:   2%|▏         | 1/54 [00:00<00:19,  2.71it/s]Processing checkpoints:   4%|▎         | 2/54 [00:00<00:12,  4.29it/s]Processing checkpoints:   6%|▌         | 3/54 [00:00<00:09,  5.17it/s]Processing checkpoints:   7%|▋         | 4/54 [00:00<00:08,  5.85it/s]Processing checkpoints:   9%|▉         | 5/54 [00:00<00:07,  6.25it/s]Processing checkpoints:  11%|█         | 6/54 [00:01<00:07,  6.49it/s]Processing checkpoints:  13%|█▎        | 7/54 [00:01<00:07,  6.59it/s]Processing checkpoints:  15%|█▍        | 8/54 [00:01<00:06,  6.81it/s]Processing checkpoints:  17%|█▋        | 9/54 [00:01<00:06,  7.11it/s]Processing checkpoints:  19%|█▊        | 10/54 [00:01<00:06,  7.28it/s]Processing checkpoints:  20%|██        | 11/54 [00:02<00:09,  4.61it/s]Processing checkpoints:  22%|██▏       | 12/54 [00:02<00:08,  4.68it/s]Processing checkpoints:  24%|██▍       | 13/54 [00:02<00:08,  4.66it/s]Processing checkpoints:  26%|██▌       | 14/54 [00:02<00:08,  4.60it/s]Processing checkpoints:  28%|██▊       | 15/54 [00:02<00:09,  4.24it/s]Processing checkpoints:  30%|██▉       | 16/54 [00:03<00:08,  4.24it/s]Processing checkpoints:  31%|███▏      | 17/54 [00:03<00:08,  4.54it/s]Processing checkpoints:  33%|███▎      | 18/54 [00:03<00:07,  4.76it/s]Processing checkpoints:  35%|███▌      | 19/54 [00:03<00:07,  4.46it/s]Processing checkpoints:  37%|███▋      | 20/54 [00:04<00:08,  4.20it/s]Processing checkpoints:  39%|███▉      | 21/54 [00:04<00:07,  4.30it/s]Processing checkpoints:  41%|████      | 22/54 [00:04<00:07,  4.08it/s]Processing checkpoints:  43%|████▎     | 23/54 [00:04<00:07,  3.88it/s]Processing checkpoints:  44%|████▍     | 24/54 [00:05<00:08,  3.69it/s]Processing checkpoints:  46%|████▋     | 25/54 [00:05<00:11,  2.63it/s]Processing checkpoints:  48%|████▊     | 26/54 [00:05<00:09,  3.09it/s]Processing checkpoints:  50%|█████     | 27/54 [00:06<00:08,  3.16it/s]Processing checkpoints:  52%|█████▏    | 28/54 [00:06<00:07,  3.64it/s]Processing checkpoints:  54%|█████▎    | 29/54 [00:06<00:08,  2.99it/s]Processing checkpoints:  56%|█████▌    | 30/54 [00:07<00:07,  3.36it/s]Processing checkpoints:  57%|█████▋    | 31/54 [00:07<00:06,  3.70it/s]Processing checkpoints:  59%|█████▉    | 32/54 [00:07<00:05,  3.98it/s]Processing checkpoints:  61%|██████    | 33/54 [00:07<00:05,  4.07it/s]Processing checkpoints:  63%|██████▎   | 34/54 [00:08<00:04,  4.08it/s]Processing checkpoints:  65%|██████▍   | 35/54 [00:08<00:04,  4.02it/s]Processing checkpoints:  67%|██████▋   | 36/54 [00:08<00:04,  3.93it/s]Processing checkpoints:  69%|██████▊   | 37/54 [00:08<00:04,  3.63it/s]Processing checkpoints:  70%|███████   | 38/54 [00:09<00:04,  3.32it/s]Processing checkpoints:  72%|███████▏  | 39/54 [00:09<00:04,  3.21it/s]Processing checkpoints:  74%|███████▍  | 40/54 [00:09<00:04,  3.06it/s]Processing checkpoints:  76%|███████▌  | 41/54 [00:10<00:04,  3.19it/s]Processing checkpoints:  78%|███████▊  | 42/54 [00:10<00:03,  3.36it/s]Processing checkpoints:  80%|███████▉  | 43/54 [00:10<00:03,  3.46it/s]Processing checkpoints:  81%|████████▏ | 44/54 [00:10<00:02,  3.92it/s]Processing checkpoints:  83%|████████▎ | 45/54 [00:11<00:03,  2.73it/s]Processing checkpoints:  85%|████████▌ | 46/54 [00:12<00:03,  2.36it/s]Processing checkpoints:  87%|████████▋ | 47/54 [00:12<00:02,  2.78it/s]Processing checkpoints:  89%|████████▉ | 48/54 [00:12<00:02,  2.46it/s]Processing checkpoints:  91%|█████████ | 49/54 [00:13<00:03,  1.66it/s]Processing checkpoints:  93%|█████████▎| 50/54 [00:14<00:02,  1.66it/s]Processing checkpoints:  94%|█████████▍| 51/54 [00:14<00:01,  1.98it/s]Processing checkpoints:  96%|█████████▋| 52/54 [00:15<00:00,  2.37it/s]Processing checkpoints:  98%|█████████▊| 53/54 [00:15<00:00,  2.83it/s]Processing checkpoints: 100%|██████████| 54/54 [00:15<00:00,  3.23it/s]Processing checkpoints: 100%|██████████| 54/54 [00:15<00:00,  3.50it/s]
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+encoder droupout init 0.1
+encoder droupout init 0.1
+decoder droupout init 0.1
+
+   Total samples collected:
+   GT: (540, 2464)
+   PD: (540, 2464)
+   FN: (540, 2464)
+   Checkpoints processed: 54
+
+   Saved complete dataset to /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/cvpr_analysis_scripts/data
+
+4. Statistical Analysis...
+type  n_samples      mean      std  skewness  kurtosis   l2_norm
+  GT        540 -0.004352 0.421912 -0.783085 10.825991 18.492422
+  PD        540  0.000528 0.237535  0.204591 34.905437  6.432004
+  FN        540 -0.004352 0.422375 -0.779888 10.774524 18.524159
+
+5. Spectral Analysis (FFT)...
+type  spectral_centroid  spectral_flatness
+  GT        1231.271574           0.839174
+  PD        1231.606862           0.832926
+  FN        1231.269999           0.839260
+
+6. Topological Analysis (GUDHI)...
+   GT: β₀=1, β₁=0, H₁ features=2, entropy=0.692
+   PD: β₀=1, β₁=0, H₁ features=2, entropy=0.160
+   FN: β₀=1, β₁=0, H₁ features=4, entropy=0.883
+
+7. Generating visualizations...
+   Saved: complete_statistics.png
+   Saved: complete_topology.png
+
+================================================================================
+COMPLETE ANALYSIS FINISHED
+================================================================================
+
+Processed 54 checkpoints
+Total samples: GT=540, PD=540, FN=540
+
+All results saved to: /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/cvpr_analysis_scripts/data
+All figures saved to: /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox/CVPR 2026/figures

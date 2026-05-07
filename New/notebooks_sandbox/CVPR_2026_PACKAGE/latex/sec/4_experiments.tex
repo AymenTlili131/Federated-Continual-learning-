@@ -1,0 +1,123 @@
+\section{Experimental Setup}
+\label{sec:experiments}
+
+\subsection{Dataset and Architecture}
+
+We use MNIST as our base dataset, creating three data overlap scenarios:
+\begin{itemize}
+    \item \textbf{Overlap 0}: Disjoint training sets (32,812 pairs)
+    \item \textbf{Overlap 1}: Partial overlap (130,620 pairs, 4× overlap 0)
+    \item \textbf{Overlap 2}: High overlap (206,578 pairs, 6.3× overlap 0)
+\end{itemize}
+
+The overlap level determines how many valid CNN pairs can be formed for comparison, directly impacting dataset size and training dynamics.
+
+\textbf{Base CNN Architecture:}
+\begin{itemize}
+    \item 2 convolutional layers (32, 64 filters)
+    \item 2 fully connected layers (128, 10 units)
+    \item Total parameters: 2,464
+    \item Layer boundaries: [208, 1414, 1514, 2254, 2464]
+\end{itemize}
+
+\textbf{Hyper-Representation Model:}
+\begin{itemize}
+    \item Encoder: 6-layer transformer, 8 heads, 512-dim
+    \item Bottleneck: 128-dimensional embedding
+    \item Decoder: 2-layer lightweight reconstruction
+    \item Total parameters: 4.02M
+    \item Patch size: 16 weights → 154 patches
+\end{itemize}
+
+\subsection{Training Protocol}
+
+\textbf{Hyper-representation training:}
+\begin{itemize}
+    \item Epochs: 200
+    \item Batch size: 24
+    \item Learning rate: $10^{-4}$ with cosine annealing
+    \item Warmup: 10 epochs
+    \item Optimizer: AdamW
+    \item Loss weights: $\alpha = 0.5$, $\beta = 0.5$
+\end{itemize}
+
+\textbf{Loss function evaluation:}
+Each of 18 loss functions trained for 200 epochs across 3 overlaps, yielding 51 completed experiments (some still in progress). Training time scales linearly with dataset size:
+\begin{itemize}
+    \item Overlap 0: ~3 hours per loss
+    \item Overlap 1: ~10 hours per loss (4× data)
+    \item Overlap 2: ~16 hours per loss (6.3× data)
+\end{itemize}
+
+\subsection{Topological Analysis Pipeline}
+
+\textbf{Persistence computation:}
+\begin{enumerate}
+    \item Extract weight vectors at epochs 25, 50, 75, 100, 125, 150, 175, 200
+    \item Normalize weights using StandardScaler
+    \item Subsample to 1000 points if necessary
+    \item Compute Rips complex with max edge length 2.0
+    \item Calculate persistence for dimensions 0, 1, 2
+\end{enumerate}
+
+\textbf{Multiparameter filtration:}
+\begin{enumerate}
+    \item Construct bifiltration over (scale, epoch)
+    \item Compute rank invariant at grid points
+    \item Extract signed barcodes
+    \item Calculate Hilbert function
+\end{enumerate}
+
+\textbf{Feature extraction:}
+For each persistence diagram, compute:
+\begin{itemize}
+    \item Feature counts: $|\{(b,d) : d - b > \epsilon\}|$ for each dimension
+    \item Average persistence: $\frac{1}{n}\sum_i (d_i - b_i)$
+    \item Persistence entropy: $-\sum_i p_i \log p_i$
+    \item Effective rank: $\exp(\text{entropy})$
+    \item Total persistence: $\sum_i (d_i - b_i)$
+\end{itemize}
+
+\subsection{Evaluation Metrics}
+
+\textbf{Training metrics:}
+\begin{itemize}
+    \item Final/best training loss
+    \item Final/best validation loss
+    \item Convergence speed (epochs to 95\% best loss)
+\end{itemize}
+
+\textbf{Performance metrics:}
+\begin{itemize}
+    \item CNN validation accuracy
+    \item Reconstruction error (for hyper-representations)
+    \item Embedding quality (silhouette score)
+\end{itemize}
+
+\textbf{Topological metrics:}
+\begin{itemize}
+    \item Betti numbers $\beta_0, \beta_1, \beta_2$
+    \item Persistence entropy
+    \item Effective rank
+    \item Stability (bottleneck distance between diagrams)
+\end{itemize}
+
+\textbf{Statistical metrics:}
+\begin{itemize}
+    \item Weight distribution moments (mean, std, skewness, kurtosis)
+    \item Eigenvalue spectrum (top 100 eigenvalues)
+    \item Effective dimensionality
+    \item Correlation structure
+\end{itemize}
+
+\subsection{Computational Resources}
+
+All experiments run on a single GPU (NVIDIA RTX/Tesla) with 16GB memory. Total computational budget:
+\begin{itemize}
+    \item Hyper-representation training: ~600 GPU hours
+    \item Loss function experiments: ~1,500 GPU hours
+    \item Topological analysis: ~50 CPU hours
+    \item Statistical analysis: ~10 CPU hours
+\end{itemize}
+
+Total: ~2,160 GPU hours + 60 CPU hours over 3 weeks.

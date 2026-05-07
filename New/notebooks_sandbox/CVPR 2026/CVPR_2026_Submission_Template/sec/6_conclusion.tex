@@ -1,0 +1,30 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We presented a \textbf{weight-space prediction framework for Federated Continual Learning}, in which a dual-encoder TransformerAE learns to map paired task weight vectors directly to merged-model weights---enabling zero-data, zero-gradient model composition. From 56 completed Stage-1 experiments across 39 curated loss functions and three data-overlap regimes, we establish several concrete findings:
+
+\subsection{Confirmed Findings}
+
+\textbf{FCL weight prediction is universally viable.} Every loss family tested achieves $\geq$75\% CNN ID accuracy after 5-epoch fine-tuning from predicted weights, a +66 percentage-point improvement over near-random initialization. This validates weight-space prediction as a practical FCL primitive.
+
+\textbf{Loss choice is overlap-dependent.} No single loss dominates across all three overlap regimes. Log-norm regularization excels at low overlap (disjoint tasks); spectral FFT+MelSpec leads at partial overlap; optimal transport (LW\_Sinkhorn) wins at high overlap with the best overall accuracy (85.1\%) and lowest GW distance (13.4). Overlap-aware loss selection is therefore warranted in deployment.
+
+\textbf{OT losses produce geometrically closer weights.} Sinkhorn-family losses reduce Gromov--Wasserstein distance to ground-truth weights by 47--79\% compared to MSE/MAE, indicating distributional shape preservation beyond pointwise fidelity. This geometric advantage translates to more robust performance at high overlap.
+
+\textbf{Layerwise normalization is consistently beneficial.} All six LW variants match or exceed their global counterparts, with LWLN achieving the best average across completed runs (81.3\% vs.\ 80.6\% for MSE).
+
+\subsection{Open Questions \textcolor{gray}{[to be addressed]}}
+
+\begin{itemize}
+    \item \textbf{Do topological losses outperform baselines?} DiffPers, RTD, and PersLandscape regularization are hypothesized to produce weight manifolds with topological structure more aligned with task structure. Results pending.
+    \item \textbf{Does the winner profile hold at larger model sizes?} The multi-stage tournament (small $\to$ medium $\to$ large) will reveal whether overlap-dependent winners are robust or model-capacity artifacts.
+    \item \textbf{Do HMMR-segmented training phases correlate with final accuracy?} Phase transition timing may predict convergence quality earlier than epoch 200.
+\end{itemize}
+
+\subsection{Limitations}
+
+Our base CNN ($d=2{,}464$, MNIST) is intentionally small to enable large-scale loss comparison. Scaling to larger architectures requires resolving the quadratic complexity of Sinkhorn and the $O(n^3)$ persistence computation for DiffPers/RTD at larger $d$. The tournament protocol addresses this via progressive model-size expansion.
+
+\subsection{Concluding Remarks}
+
+This work makes the case that \emph{how} we measure error in weight space is not a secondary design choice---it determines the geometry of the learned prediction manifold, which in turn determines transfer efficiency across data distributions. The interplay between loss geometry, Gromov--Wasserstein structure, and downstream fine-tuning accuracy revealed here provides a foundation for principled loss design in federated and continual learning settings.
