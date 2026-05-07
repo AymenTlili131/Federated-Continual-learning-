@@ -15,14 +15,15 @@ MSE.ipynb and wsiayn.ipynb are the notebooks that handle :
 
 
 use commands :
-missing_runs_overlap0.sh
-missing_runs_overlap1.sh
-missing_runs_overlap2.sh in notbook sandbox  
+missing_runs_overlap0.sh <br>
+missing_runs_overlap1.sh <br>
+missing_runs_overlap2.sh in notbook sandbox  <br>
 
-and 
+and <br>
 
 cd /home/aymen/Documents/GitHub/Federated-Continual-learning-/New/notebooks_sandbox && for d in $(find experiments/ -maxdepth 1 -type d -newermt "2026-03-20" -name "tiny_overlap2_*" | sort); do [ -f "$d/checkpoints/best_model.pth" ] || continue; name=$(basename "$d"); [ -f "paper_results/deep_analysis/$name/df1_weights.pkl" ] && echo "SKIP $name" && continue; echo "=== $name ===" && /home/aymen/anaconda3/envs/FCL/bin/python3 scripts/checkpoint_deep_analysis.py --exp-dir "$d" --overlap 2 --n-samples 100 --cnn-batch-size 256 --num-workers 6 --resume; done
 
+<br>
 ----------------
 
 
